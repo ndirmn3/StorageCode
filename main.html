@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krypton</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: white;
+            background-image: url('https://wallpapercave.com/wp/wp8594981.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed; /* Keeps the background fixed during scrolling */
+
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            padding: 1rem;
+            background-color: transparent;
+        }
+
+        nav a {
+            margin: 0 1rem;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .content {
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        button[data-url] {
+            display: block;
+            width: 200px;
+            margin: 10px auto;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        input {
+            background: rgba(0, 0, 0, 0);
+            border: none;
+            outline: none;
+            width: 100%;
+            border-bottom: 1px solid #FFFFFF;
+            color: #FFFFFF;
+            font-family: sans-serif;
+            font-size: inherit;
+        }
+
+        .abbutton-wrapper {
+            padding-top: 2%;
+            text-align: center;
+            font-family: sans-serif;
+        }
+
+        .console-abbutton {
+            padding: 10px;
+            width: 200px;
+            margin: 10px auto;
+            border: none;
+            outline: none;
+            color: white;
+            background-color: #007BFF;
+            border-radius: 10px;
+            cursor: pointer;
+            display: block;
+            font-size: 16px;
+        }
+      
+        /*
+        button[data-url]:hover {
+            background-color: #0056b3;
+        }
+        */
+      
+        .console-abbutton:hover {
+            background-color: #0056b3;
+        }
+
+        #copyButton:hover {
+            background-color: #0056b3; 
+        }
+        
+        .textarea {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 10px;
+        }
+        
+        .data-url-container {
+            max-width: 100%; /* Allow the container to grow with its parent */
+            overflow-x: auto; /* Enable horizontal scrolling if needed */
+        }
+
+        #copyButton {
+            display: block;
+            width: 200px;
+            margin: 10px auto;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            outline: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #htmlCode {
+            width: 85%;
+            height: 200px;
+            padding: 10px;
+            color: white;
+            border-radius: 8px; /* Rounded corners */
+            font-family: monospace, sans-serif;
+            font-size: 14px;
+            background-color: transparent;
+        }
+
+        #error-page h1 {
+            font-size: 3rem;
+            margin: 0;
+        }
+
+        #error-page p {
+            font-size: 1.5rem;
+            margin-top: 1rem;
+            text-align: center;
+            padding: 0 1rem;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="error-page" style="display: block; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: white; color: gray; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; font-family: Arial, sans-serif;">
+        <h1>404 Page Not Found</h1>
+        <p>We’re sorry but it appears that we can’t find the page you were looking for.</p>
+        <input id="p-box" type="text" autocomplete="off" style="opacity: 0; outline: none; border: none; height: 100vh; width: 100vw; position: fixed;" />
+    </div>
+
+    <nav>
+        <a href="#home">Home</a>
+        <!--
+        <a href="#any">any</a>
+        -->
+        <a href="#abopener">AB Opener</a>
+        <a href="#dataurlgenerator">Data URL Generator</a>
+    </nav>
+
+    <div class="content" id="home">
+        <h1>Krypton</h1>
+        <p>Made by evan</p>
+    </div>
+  
+    <!--
+    <div class="content" id="any" style="display: none;">
+        <h1>any</h1>
+        <button data-url="base64link">.any</button>
+    </div>
+    -->
+
+    <div class="content" id="abopener" style="display: none;">
+        <h1>AB Opener</h1>
+        <div class="console-container">
+            <div class="console">
+                <p>Enter a website you want to open in about:blank:</p>
+                <p class="console-input"><input id="url-target" value="" autocomplete="on" type="text" autofocus /></p>
+                    <div class="abbutton-wrapper">
+                        <button id="create" class="console-abbutton">Enter</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content" id="dataurlgenerator" style="display: none;">
+        <h1>Data URL Generator</h1>
+            <p>Enter your HTML code below:</p>
+            <textarea id="htmlCode" oninput="generateDataUrl()"></textarea>
+            <button id="copyButton" onclick="copyToClipboard()" disabled>Copy to Clipboard</button>
+            <div class="data-url-container">
+                <p id="dataUrl" class="data-url"></p>
+            </div>
+    </div>
+    <script>
+        let currentWindow = null;
+
+        const links = document.querySelectorAll('nav a');
+        const pages = document.querySelectorAll('.content');
+
+        links.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = link.getAttribute('href').substring(1);
+                pages.forEach(page => {
+                    if (page.id === target) {
+                        page.style.display = 'block';
+                    } else {
+                        page.style.display = 'none';
+                    }
+                });
+            });
+        });
+      
+        /*
+        document.querySelectorAll('button[data-url]').forEach(button => {
+            button.addEventListener('click', function () {
+                const eU = this.getAttribute('data-url');
+                const url = atob(eU);
+ 
+                currentWindow = window.open('about:blank', '_blank');
+              
+                  currentWindow.document.title = "Home";
+
+                  let link = currentWindow.document.createElement('link');
+                  link.rel = 'icon';
+                  link.href = "https://i.ibb.co/wrFhgSJm/class.png";
+                  currentWindow.document.head.appendChild(link);
+                  
+                  currentWindow.document.body.style.margin = '0';
+                  currentWindow.document.body.style.height = '100vh';
+
+                  let iframe = document.createElement('iframe');
+                  iframe.style.border = 'none';
+                  iframe.style.width = '100%';
+                  iframe.style.height = '100%';
+                  iframe.style.margin = '0';
+                  iframe.src = url;
+
+                  currentWindow.document.body.appendChild(iframe);
+            });
+        });
+        */
+
+        var url = document.getElementById("url-target");
+        var urlObj = new window.URL(window.location.href);
+        document.getElementById("create").onclick = function () {
+            if (!url.value.startsWith("http://") && !url.value.startsWith("https://")) {
+                url.value = "https://" + url.value;
+            } else if (url.value.startsWith("http://")) {
+                url.value = "https://" + url.value.substring(7);
+            }
+            win = window.open();
+          
+            win.document.title = "Home";
+            let link = win.document.createElement("link");
+            link.rel = "icon";
+            link.href = "https://i.ibb.co/wrFhgSJm/class.png";
+            win.document.head.appendChild(link);
+
+            win.document.body.style.margin = "0";
+            win.document.body.style.height = "100vh";
+            var iframe = win.document.createElement("iframe");
+            iframe.style.border = "none";
+            iframe.style.width = "100%";
+            iframe.style.height = "100%";
+            iframe.style.margin = "0";
+            iframe.referrerpolicy = "no-referrer";
+            iframe.allow = "fullscreen";
+            iframe.src = url.value;
+            win.document.body.appendChild(iframe);
+        };
+      
+      
+        
+
+        function generateDataUrl() {
+            var htmlCode = document.getElementById('htmlCode').value;
+            var encodedHtml = encodeURIComponent(htmlCode);
+            var dataUrl = 'data:text/html;charset=utf-8,' + encodedHtml;
+            document.getElementById('dataUrl').innerText = dataUrl;
+            // Ensure copy button is enabled after generating data URL
+            document.getElementById('copyButton').disabled = false;
+        }
+
+        function copyToClipboard() {
+            var dataUrl = document.getElementById('dataUrl').innerText;
+            var tempInput = document.createElement('input');
+            tempInput.value = dataUrl;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+        }
+
+        const errorPage = document.getElementById('error-page');
+        const pB = document.getElementById('p-box');
+        const homePage = document.getElementById('home');
+        const eP = "NDA0cG5m";
+
+        pB.focus();
+
+        let tP = '';
+        pB.addEventListener('input', (event) => {
+            tP = event.target.value.toLowerCase();
+        });
+
+        document.addEventListener('keydown', (event) => {
+            const tPE = btoa(tP);
+            if (
+                tPE === eP &&
+                event.key === 'Shift' &&
+                event.location === KeyboardEvent.DOM_KEY_LOCATION_RIGHT
+            ) {
+                errorPage.style.display = 'none';
+                homePage.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
