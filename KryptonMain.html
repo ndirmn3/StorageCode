@@ -13,7 +13,7 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            background-attachment: fixed; /* Keeps the background fixed during scrolling */
+            background-attachment: fixed;
 
         }
 
@@ -129,7 +129,7 @@
             height: 200px;
             padding: 10px;
             color: white;
-            border-radius: 8px; /* Rounded corners */
+            border-radius: 8px;
             font-family: monospace, sans-serif;
             font-size: 14px;
             background-color: transparent;
@@ -145,6 +145,12 @@
             margin-top: 1rem;
             text-align: center;
             padding: 0 1rem;
+        }
+
+        .gif {
+            width: 300px;
+            height: auto;
+            border-radius: 10px
         }
 
     </style>
@@ -163,6 +169,7 @@
         <a href="#chromesignin">Chrome Sign In Exploit</a>
         <a href="#sparkvue">SPARKvue Exploit</a>
         <a href="#abopener">AB Opener</a>
+        <a href="#dataurlopener">Data URL Opener</a>
         <a href="#dataurlgenerator">Data URL Generator</a>
     </nav>
 
@@ -180,11 +187,17 @@
   
     <div class="content" id="rigtools" style="display: none;">
         <h1>Rigtools</h1>
-        <p>Coming Soon!</p>
+        <p>1. Open devtools://devtools/bundled/devtools_app.html</p>
+        <p>2. Open devtools://devtools/bundled/devtools_app.html?expiriments=true&wss=rig.ccsd.store</p>
+        <p>3. Under the Network tab, double click the checkbox under "Name"</p>
+        <img scr="url here" class="gif">
+        <p>4. Click "GForms Locked Mode"</p>
+        <p>Now you can disable any extension you want</p>
+        <p>If disabling a particular extension fails, try directly disabling all extensions</p>
     </div>
 
     <div class="content" id="chromesignin" style="display: none;">
-        <h1>chrome://chrome-signin Exploit</h1>
+        <h1>Chrome Sign In Exploit</h1>
         <p>Coming Soon!</p>
     </div>
 
@@ -206,8 +219,15 @@
         </div>
     </div>
 
+    <div class="content" id="dataurlopener" style="display: none;">
+        <h1>Data URL Opener</h1>
+        <P>This tool allows you to open a website with a data: URL link.</P>
+        <p>Coming Soon!</p>
+    </div>
+
     <div class="content" id="dataurlgenerator" style="display: none;">
         <h1>Data URL Generator</h1>
+            <P>This tool allows you to convert your html code into an openable data: URL link.</P>
             <p>Enter your HTML code below:</p>
             <textarea id="htmlCode" oninput="generateDataUrl()"></textarea>
             <button id="copyButton" onclick="copyToClipboard()" disabled>Copy to Clipboard</button>
@@ -302,7 +322,6 @@
             var encodedHtml = encodeURIComponent(htmlCode);
             var dataUrl = 'data:text/html;charset=utf-8,' + encodedHtml;
             document.getElementById('dataUrl').innerText = dataUrl;
-            // Ensure copy button is enabled after generating data URL
             document.getElementById('copyButton').disabled = false;
         }
 
