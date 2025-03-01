@@ -167,6 +167,19 @@
             font-size: 16px;
         }
 
+
+        .result-output {
+            margin-top: 20px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        #url-input {
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
     </style>
 </head>
 <body>
@@ -207,6 +220,8 @@
         <p>4. Click "GForms Locked Mode"</p>
         <p>Now you can disable any extension you want</p>
         <p>If disabling a particular extension fails, try directly disabling all extensions</p>
+        <p><strong>DO NOT USE THIS AT SCHOOL</strong></p>
+        <p><strong>THIS MAY NOT WORK ON SCHOOL NETWORKS</strong></p>
     </div>
 
     <div class="content" id="chromesignin" style="display: none;">
@@ -222,6 +237,8 @@
         <p>9. Scroll down and click "Pricing"</p>
         <p>10. At the GitHub search bar (not the url search bar), search "google"</p>
         <p>11. Click the link that redirects to google on the right side</p>
+        <p><strong>THIS WILL ONLY WORK ON CHROMEBOOK</strong></p>
+        <p><strong>THIS MAY NOT WORK ON SCHOOL NETWORKS</strong></p>
     </div>
 
     <div class="content" id="sparkvue" style="display: none;">
@@ -233,6 +250,7 @@
         <p>5. Find the file you downloaded and open it</p>
         <p>BlobbypassSPARK works by googling whatever the user types into the input box.</p>
         <p>Code made by <a href="https://github.com/Blobby-Boi" target="_blank">Blobby Boi</a></p>
+        <p><strong>THIS MAY NOT WORK ON SCHOOL NETWORKS</strong></p>
     </div>
 
     <div class="content" id="abopener" style="display: none;">
@@ -248,7 +266,7 @@
         </div>
     </div>
 
-    <div class="content" id="dataurlopener" style="display: none;">
+<!--    <div class="content" id="dataurlopener" style="display: none;">
         <h1>Data URL Opener</h1>
         <P>This tool allows you to open a website with a data: URL link.</P>
         <label for="url-input">Enter a website you want to open with a data: URL link:</label>
@@ -256,6 +274,18 @@
         <textarea id="result" readonly></textarea>
         <button id="copy-button">Copy to Clipboard</button>
     </div>
+    -->
+
+    <div class="content" id="dataurlopener" style="display: none;">
+        <h1>Data URL Opener</h1>
+        <p>This tool allows you to open a website with a data: URL link.</p>
+        <label for="url-input">Enter a website you want to open with a data: URL link:</label>
+        <input type="text" id="url-input" />
+        <button id="copy-button">Copy to Clipboard</button>
+
+        <div id="result" class="result-output"></div>
+    </div>
+
 
     <div class="content" id="dataurlgenerator" style="display: none;">
         <h1>Data URL Generator</h1>
@@ -401,7 +431,7 @@ function updateDataUrl() {
     let url = document.getElementById('url-input').value.trim();
 
     if (!url) {
-        document.getElementById('result').value = "";
+        document.getElementById('result').textContent = "";
         return;
     }
 
@@ -416,7 +446,8 @@ function updateDataUrl() {
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Iframe Page</title>
+            <title>Home</title>
+            <link rel="icon" href="https://i.ibb.co/wrFhgSJm/class.png" type="image/x-icon">
             <style>
                 body, html { margin: 0; padding: 0; height: 100%; background-color: #111; }
                 iframe { width: 100%; height: 100%; border: none; }
@@ -429,15 +460,24 @@ function updateDataUrl() {
     `.trim();
 
     const encodedHtml = `data:text/html;charset=utf-8,${encodeURIComponent(htmlContent)}`;
-    document.getElementById('result').value = encodedHtml;
+    
+    // Set the result div text content
+    document.getElementById('result').textContent = encodedHtml;
 }
 
 function openerCopyToClipboard() {
     const resultField = document.getElementById('result');
-    if (!resultField.value) return;
-    resultField.select();
+    if (!resultField.textContent) return;
+
+    // Create a temporary input to copy the text
+    const tempInput = document.createElement('input');
+    tempInput.value = resultField.textContent;
+    document.body.appendChild(tempInput);
+    tempInput.select();
     document.execCommand('copy');
+    document.body.removeChild(tempInput);
 }
+
     </script>
 </body>
 </html>
