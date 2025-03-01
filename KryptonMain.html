@@ -153,6 +153,20 @@
             padding: 0 1rem;
         }
 
+        #copy-button {
+            display: block;
+            width: 200px;
+            margin: 10px auto;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            outline: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
     </style>
 </head>
 <body>
@@ -239,8 +253,6 @@
         <P>This tool allows you to open a website with a data: URL link.</P>
         <label for="url-input">Enter a website you want to open with a data: URL link:</label>
         <input type="text" id="url-input" />
-        <button id="generate-button">Generate Link</button>
-        <label for="result">Generated URL:</label>
         <textarea id="result" readonly></textarea>
         <button id="copy-button">Copy to Clipboard</button>
     </div>
@@ -383,7 +395,7 @@
 
 
 document.getElementById('url-input').addEventListener('input', updateDataUrl);
-document.getElementById('copy-button').addEventListener('click', copyToClipboard);
+document.getElementById('copy-button').addEventListener('click', openerCopyToClipboard);
 
 function updateDataUrl() {
     let url = document.getElementById('url-input').value.trim();
@@ -420,12 +432,11 @@ function updateDataUrl() {
     document.getElementById('result').value = encodedHtml;
 }
 
-function copyToClipboard() {
+function openerCopyToClipboard() {
     const resultField = document.getElementById('result');
     if (!resultField.value) return;
     resultField.select();
     document.execCommand('copy');
-    alert("Copied to clipboard!");
 }
     </script>
 </body>
