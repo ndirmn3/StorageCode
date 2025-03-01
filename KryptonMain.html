@@ -153,12 +153,6 @@
             padding: 0 1rem;
         }
 
-        .gif {
-            width: 300px;
-            height: auto;
-            border-radius: 10px
-        }
-
     </style>
 </head>
 <body>
@@ -243,7 +237,12 @@
     <div class="content" id="dataurlopener" style="display: none;">
         <h1>Data URL Opener</h1>
         <P>This tool allows you to open a website with a data: URL link.</P>
-        <p>Coming Soon!</p>
+        <label for="url-input">Enter a website you want to open with a data: URL link:</label>
+        <input type="text" id="url-input" />
+        <button id="generate-button">Generate Link</button>
+        <label for="result">Generated URL:</label>
+        <textarea id="result" readonly></textarea>
+        <button id="copy-button">Copy to Clipboard</button>
     </div>
 
     <div class="content" id="dataurlgenerator" style="display: none;">
@@ -379,6 +378,55 @@
                 homePage.style.display = 'block';
             }
         });
+
+
+
+
+document.getElementById('url-input').addEventListener('input', updateDataUrl);
+document.getElementById('copy-button').addEventListener('click', copyToClipboard);
+
+function updateDataUrl() {
+    let url = document.getElementById('url-input').value.trim();
+
+    if (!url) {
+        document.getElementById('result').value = "";
+        return;
+    }
+
+    // Automatically prepend "https://" if missing
+    if (!/^https?:\/\//i.test(url)) {
+        url = "https://" + url;
+    }
+
+    const htmlContent = `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Iframe Page</title>
+            <style>
+                body, html { margin: 0; padding: 0; height: 100%; background-color: #111; }
+                iframe { width: 100%; height: 100%; border: none; }
+            </style>
+        </head>
+        <body>
+            <iframe src="${url}"></iframe>
+        </body>
+        </html>
+    `.trim();
+
+    const encodedHtml = `data:text/html;charset=utf-8,${encodeURIComponent(htmlContent)}`;
+    document.getElementById('result').value = encodedHtml;
+}
+
+function copyToClipboard() {
+    const resultField = document.getElementById('result');
+    if (!resultField.value) return;
+    resultField.select();
+    document.execCommand('copy');
+    alert("Copied to clipboard!");
+}
     </script>
 </body>
 </html>
