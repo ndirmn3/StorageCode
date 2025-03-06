@@ -105,9 +105,6 @@
             background-color: #0056b3; 
         }
 
-        #copy-button:hover {
-            background-color: #0056b3; 
-        }
         
         .textarea {
             width: 100%;
@@ -157,33 +154,20 @@
             padding: 0 1rem;
         }
 
-        #copy-button {
-            display: block;
-            width: 200px;
-            margin: 10px auto;
-            padding: 10px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            outline: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
+      .popup {
+          display: none;
+          position: fixed;
+          top: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          background-color: #28a745;
+          color: white;
+          padding: 10px 20px;
+          border-radius: 5px;
+          font-size: 16px;
+          z-index: 1000;
+      }
 
-
-        .result-output {
-            margin-top: 20px;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-
-        #url-input {
-            margin-top: 20px;
-            margin-bottom: 10px;
-        }
-        
     </style>
 </head>
 <body>
@@ -193,6 +177,8 @@
         <p>We’re sorry but it appears that we can’t find the page you were looking for.</p>
         <input id="p-box" type="text" autocomplete="off" style="opacity: 0; outline: none; border: none; height: 100vh; width: 100vw; position: fixed;" />
     </div>
+    
+    <div id="popup" class="popup">URL copied to clipboard!</div>
 
     <nav>
         <a href="#home">Home</a>
@@ -200,7 +186,6 @@
         <a href="#chromesignin">Chrome Sign In Exploit</a>
         <a href="#sparkvue">BlobbypassSPARK</a>
         <a href="#abopener">About Blank Opener</a>
-        <a href="#dataurlopener">Data URL Opener</a>
         <a href="#dataurlgenerator">Data URL Generator</a>
     </nav>
 
@@ -272,17 +257,6 @@
             </div>
         </div>
     </div>
-
-    <div class="content" id="dataurlopener" style="display: none;">
-        <h1>Data URL Opener</h1>
-        <p>This tool allows you to open a website with a data:text URL link.</p>
-        <label for="url-input">Enter a website you want to open with a data:text URL link:</label>
-        <input type="text" id="url-input" />
-        <p><strong>SOME URLS MAY NOT WORK WITH THIS</strong></p>
-        <button id="copy-button">Copy to Clipboard</button
-        <div id="result" class="result-output"></div>
-    </div>
-
 
     <div class="content" id="dataurlgenerator" style="display: none;">
         <h1>Data URL Generator</h1>
@@ -392,6 +366,17 @@
             tempInput.select();
             document.execCommand('copy');
             document.body.removeChild(tempInput);
+            showPopup("URL copied to clipboard!");
+        }
+        
+        
+        function showPopup(message) {
+            const popup = document.getElementById("popup");
+            popup.textContent = message;
+            popup.style.display = "block";
+            setTimeout(() => {
+                popup.style.display = "none";
+            }, 3000);
         }
 
         const errorPage = document.getElementById('error-page');
@@ -418,58 +403,7 @@
             }
         });
 
-
-        document.getElementById('url-input').addEventListener('input', updateDataUrl);
-        document.getElementById('copy-button').addEventListener('click', openerCopyToClipboard);
         
-        function updateDataUrl() {
-            let url = document.getElementById('url-input').value.trim();
-        
-            if (!url) {
-                document.getElementById('result').textContent = "";
-                return;
-            }
-        
-            if (!/^https?:\/\//i.test(url)) {
-                url = "https://" + url;
-            }
-        
-            const htmlContent = `
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>Home</title>
-                    <link rel="icon" href="https://i.ibb.co/wrFhgSJm/class.png" type="image/x-icon">
-                    <style>
-                        body, html { margin: 0; padding: 0; height: 100%; background-color: #111; }
-                        iframe { width: 100%; height: 100%; border: none; display: block; overflow: hidden;}
-                    </style>
-                </head>
-                <body>
-                    <iframe src="${url}"></iframe>
-                </body>
-                </html>
-            `.trim();
-        
-            const encodedHtml = `data:text/html;charset=utf-8,${encodeURIComponent(htmlContent)}`;
-            
-            // Set the result div text content
-            document.getElementById('result').textContent = encodedHtml;
-        }
-        
-        function openerCopyToClipboard() {
-            const resultField = document.getElementById('result');
-            if (!resultField.textContent) return;
-        
-            const tempInput = document.createElement('input');
-            tempInput.value = resultField.textContent;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempInput);
-        }
 
     </script>
 </body>
