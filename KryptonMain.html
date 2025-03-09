@@ -29,11 +29,11 @@
           }
         }
         
-    .moving-gradient {
-      background: linear-gradient(135deg, #004080, #007099, #00A070);
-      background-size: 300% 300%;
-      animation: gradientMove 30s linear infinite;
-    }
+        .moving-gradient {
+          background: linear-gradient(135deg, #004080, #007099, #00A070);
+          background-size: 300% 300%;
+          animation: gradientMove 30s linear infinite;
+        }
 
         
         body {
@@ -79,19 +79,6 @@
             padding: 2rem;
             text-align: center;
         }
-        
-        button[data-url] {
-            display: block;
-            width: 200px;
-            margin: 10px auto;
-            padding: 10px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            cursor: pointer;
-        }
 
         input {
             background: rgba(0, 0, 0, 0);
@@ -109,7 +96,7 @@
             font-family: sans-serif;
         }
 
-        .console-abbutton {
+        .console-abbutton, #copyButton, button[data-url] {
             padding: 10px;
             width: 200px;
             margin: 10px auto;
@@ -129,14 +116,9 @@
         }
         */
       
-        .console-abbutton:hover {
+        .console-abbutton:hover, #copyButton:hover {
             background-color: #0056b3;
         }
-
-        #copyButton:hover {
-            background-color: #0056b3; 
-        }
-
         
         .textarea {
             width: 100%;
@@ -150,20 +132,6 @@
             word-wrap: break-word;
             overflow-y: auto;
             overflow-x: hidden;
-        }
-
-        #copyButton {
-            display: block;
-            width: 200px;
-            margin: 10px auto;
-            padding: 10px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            outline: none;
-            cursor: pointer;
-            font-size: 16px;
         }
 
         #htmlCode {
@@ -229,7 +197,10 @@
     </nav>
 
     <div class="content" id="home">
-        <h1>Krypton</h1>
+        <h1>
+          <img src="https://i.ibb.co/60C3nCMH/kryptonlogo.png" alt="Krypton Logo" style="height: 50px; vertical-align: -12px;">
+          Krypton
+        </h1>
         <p>Krypton has a powerful collection of utilities that can help bypass school restrictions. Krypton provides features such as an about:blank opener, a data:text URL opener and generator (thx to <a href="https://github.com/Blobby-Boi" target="_blank">Blobby Boi</a> for some of the code), and tools to disable browser extensions.</p>
     </div>
 
