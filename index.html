@@ -145,8 +145,11 @@
         }
         
         .data-url-container {
-            max-width: 100%; /* Allow the container to grow with its parent */
-            overflow-x: auto; /* Enable horizontal scrolling if needed */
+            max-width: 100%;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
 
         #copyButton {
@@ -169,6 +172,7 @@
             padding: 10px;
             color: white;
             border-radius: 8px;
+            border: 1px solid white;
             font-family: monospace, sans-serif;
             font-size: 14px;
             background-color: transparent;
