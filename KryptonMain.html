@@ -96,7 +96,7 @@
             font-family: sans-serif;
         }
 
-        .console-abbutton, #copyButton, button[data-url] {
+        .console-abbutton, #copyButton, .console-vmbutton, button[data-url] {
             padding: 10px;
             width: 200px;
             margin: 10px auto;
@@ -116,7 +116,7 @@
         }
         */
       
-        .console-abbutton:hover, #copyButton:hover {
+        .console-abbutton:hover, #copyButton:hover, .console-vmbutton:hover {
             background-color: #0056b3;
         }
         
@@ -192,6 +192,7 @@
         <a href="#chromesignin">Chrome Sign In Exploit</a>
         <a href="#sparkvue">BlobbypassSPARK</a>
         <a href="#proxylinks">Creating Proxy Links</a>
+        <a href="#windowsonchromeos">Windows on ChromeOS</a>
         <a href="#abopener">About Blank Opener</a>
         <a href="#dataurlgenerator">Data URL Generator</a>
     </nav>
@@ -286,6 +287,20 @@
         <p><strong>The link now should work in about 5 minutes, but sometimes it will take up to an hour</strong></p>
         <p><strong>NEWLY REGISTERED DOMAINS LIKE skibiditoi.lat WILL HAVE SUBDOMAINS THAT ARE LIKELY TEMPORARILY BLOCKED FOR A DAY OR TWO</strong></p>
     </div>
+    
+    <div class="content" id="windowsonchromeos" style="display: none;">
+        <h1>How to launch Windows on ChromeOS:</h1>
+        <p>1. Open <a href="https://learn.microsoft.com/en-us/training/modules/implement-common-integration-features-finance-ops/10-exercise-1" target="_blank">this</a></p>
+        <p>2. If you are signed in, skip to 4. If your not, click "Sign in to launch VM mode"</p>
+        <p>3. Enter in your email and password (just enter your google account info)</p>
+        <p>4. Now that you are signed in, click "Launch VM mode" unless it has automatically launched after you are signed in</p>
+        <p>5. Enter the url that it sent you to here:</p>
+        <p class="vm-input"><input id="url-input" value="" autocomplete="on" type="text" autofocus /></p>
+        <div class="vmbutton-wrapper">
+            <button id="vmenter" class="console-vmbutton">Enter</button>
+        </div>
+        <p><strong>THE PASSWORD IS "pass@word1"</strong></p>
+    </div>  
 
     <div class="content" id="abopener" style="display: none;">
         <h1>About Blank Opener</h1>
@@ -295,7 +310,7 @@
                 <p class="console-input"><input id="url-target" value="" autocomplete="on" type="text" autofocus /></p>
                 <p><strong>SOME URLS MAY NOT WORK WITH THIS</strong></p>
                     <div class="abbutton-wrapper">
-                        <button id="create" class="console-abbutton">Enter</button>
+                        <button id="abenter" class="console-abbutton">Enter</button>
                     </div>
             </div>
         </div>
@@ -363,7 +378,7 @@
 
         var url = document.getElementById("url-target");
         var urlObj = new window.URL(window.location.href);
-        document.getElementById("create").onclick = function () {
+        document.getElementById("abenter").onclick = function () {
             if (!url.value.startsWith("http://") && !url.value.startsWith("https://")) {
                 url.value = "https://" + url.value;
             } else if (url.value.startsWith("http://")) {
@@ -389,7 +404,46 @@
             iframe.src = url.value;
             win.document.body.appendChild(iframe);
         };
-      
+        
+        var url = document.getElementById("url-input");
+        var urlObj = new window.URL(window.location.href);
+        document.getElementById("vmenter").onclick = function () {
+            if (!url.value.startsWith("http://") && !url.value.startsWith("https://")) {
+                url.value = "https://" + url.value;
+            } else if (url.value.startsWith("http://")) {
+                url.value = "https://" + url.value.substring(7);
+            }
+            
+            if (url.value.includes("LabClient")) {
+                url.value = url.value.replace("LabClient", "VirtualizationClient");
+            }
+        
+            let vmString= "?vmOnly=1&vmId=290110&titlebar=1";
+            if (url.value.endsWith("/")) {
+                url.value = url.value.slice(0, -1);
+            }
+            url.value += vmString;
+        
+            win = window.open();
+        
+            win.document.title = "Home";
+            let link = win.document.createElement("link");
+            link.rel = "icon";
+            link.href = "https://i.ibb.co/wrFhgSJm/class.png";
+            win.document.head.appendChild(link);
+        
+            win.document.body.style.margin = "0";
+            win.document.body.style.height = "100vh";
+            var iframe = win.document.createElement("iframe");
+            iframe.style.border = "none";
+            iframe.style.width = "100%";
+            iframe.style.height = "100%";
+            iframe.style.margin = "0";
+            iframe.referrerpolicy = "no-referrer";
+            iframe.allow = "fullscreen";
+            iframe.src = url.value;
+            win.document.body.appendChild(iframe);
+        };
       
         
 
