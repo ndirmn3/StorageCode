@@ -96,7 +96,7 @@
             font-family: sans-serif;
         }
 
-        .console-abbutton, #copyButton, button[data-url] {
+        .console-abbutton, #copyButton, .console-vmbutton, button[data-url] {
             padding: 10px;
             width: 200px;
             margin: 10px auto;
@@ -116,7 +116,7 @@
         }
         */
       
-        .console-abbutton:hover, #copyButton:hover {
+        .console-abbutton:hover, #copyButton:hover, .console-vmbutton:hover {
             background-color: #0056b3;
         }
         
@@ -293,9 +293,12 @@
         <p>2. If you are signed in, skip to 4. If your not, click "Sign in to launch VM mode"</p>
         <p>3. Enter in your email and password (just enter your google account info)</p>
         <p>4. Now that you are signed in, click "Launch VM mode" unless it has automatically launched after you are signed in</p>
-        <p>You can enter fullscreen mode by clicking the computer icon at the top right, then clicking "Open in New Window"</p>
+        <p>5. Enter the URL that it sent you to here:</p>
+        <p class="vm-input"><input id="url-input" value="" autocomplete="on" type="text" autofocus /></p>
+        <div class="vmbutton-wrapper">
+            <button id="vmenter" class="console-vmbutton">Enter</button>
+        </div>
         <p><strong>THE PASSWORD IS "pass@word1"</strong></p>
-        <p><strong>IF IT WONT CONNECT, CLICK THE COMPUTER ICON AT THE TOP RIGHT AND CLICK RECONNECT</strong></p>
     </div>  
 
     <div class="content" id="abopener" style="display: none;">
@@ -365,6 +368,8 @@
                   iframe.style.width = '100%';
                   iframe.style.height = '100%';
                   iframe.style.margin = '0';
+                  iframe.allow = "clipboard-read clipboard-write; fullscreen; camera; microphone; autoplay";
+                  iframe.sandbox = "allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-downloads";
                   iframe.src = url;
 
                   currentWindow.document.body.appendChild(iframe);
@@ -396,10 +401,57 @@
             iframe.style.height = "100%";
             iframe.style.margin = "0";
             iframe.referrerpolicy = "no-referrer";
-            iframe.allow = "fullscreen";
+            iframe.allow = "clipboard-read clipboard-write; fullscreen; camera; microphone; autoplay";
+            iframe.sandbox = "allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-downloads";
             iframe.src = url.value;
             win.document.body.appendChild(iframe);
         };
+        
+        var url = document.getElementById("url-input");
+        var urlObj = new window.URL(window.location.href);
+        document.getElementById("vmenter").onclick = function () {
+            if (!url.value.startsWith("http://") && !url.value.startsWith("https://")) {
+                url.value = "https://" + url.value;
+            } else if (url.value.startsWith("http://")) {
+                url.value = "https://" + url.value.substring(7);
+            }
+            
+            if (url.value.includes("LabClient")) {
+                url.value = url.value.replace("LabClient", "VirtualizationClient");
+            }
+            
+            if (url.value.includes("Setup")) {
+                url.value = url.value.replace("Setup", "VirtualizationClient");
+            }
+        
+            let vmString= "?vmOnly=1&vmId=290110&titlebar=1";
+            if (url.value.endsWith("/")) {
+                url.value = url.value.slice(0, -1);
+            }
+            url.value += vmString;
+        
+            let win = window.open();
+        
+            win.document.title = "Home";
+            let link = win.document.createElement("link");
+            link.rel = "icon";
+            link.href = "https://i.ibb.co/wrFhgSJm/class.png";
+            win.document.head.appendChild(link);
+        
+            win.document.body.style.margin = "0";
+            win.document.body.style.height = "100vh";
+            var iframe = win.document.createElement("iframe");
+            iframe.style.border = "none";
+            iframe.style.width = "100%";
+            iframe.style.height = "100%";
+            iframe.style.margin = "0";
+            iframe.referrerpolicy = "no-referrer";
+            iframe.allow = "clipboard-read clipboard-write; fullscreen; camera; microphone; autoplay";
+            iframe.sandbox = "allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-downloads";
+            iframe.src = url.value;
+            win.document.body.appendChild(iframe);
+        };
+      
         
 
         function generateDataUrl() {
