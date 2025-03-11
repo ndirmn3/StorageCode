@@ -473,6 +473,11 @@
 
 
             newWindow.onload = function() {
+                newWindow.document.title = "Home";
+                let link = newWindow.document.createElement("link");
+                link.rel = "icon";
+                link.href = "https://i.ibb.co/wrFhgSJm/class.png";
+                newWindow.document.head.appendChild(link);
 
                 newWindow.eval(`
                     (function() {
@@ -508,12 +513,6 @@
 
 
                         var iframe = document.createElement('iframe');
-                        
-                        document.title = "Home";
-                        let link = document.createElement("link");
-                        link.rel = "icon";
-                        link.href = "https://i.ibb.co/wrFhgSJm/class.png";
-                        document.head.appendChild(link);
             
                         iframe.src = vmUrl;
                         iframe.style.border = "none";
