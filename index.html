@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -268,12 +269,12 @@
         <p>9. Check your email and click the link that FreeDNS has sent</p>
         <br>
         <h2>Creating Them:</h2>
-        <p>1. Now make sure your on the subdomain page by clicking Subdomains on the left</p>
+        <p>1. Now make sure you are on the subdomain page by clicking Subdomains on the left</p>
         <p>2. Click Add a Subdomain</p>
         <p>3. Click the dropdown next to "Domain:"</p>
         <p>4. Choose a domain, or if you want other options, click "Many many more available ..."</p>
         <p>5. Click "Shared Domain Registry"</p>
-        <p>6. Choose a public domain that has unblocked subdomains. For example, if your choosing the domain "farted.net" then check if this is blocked: "putahythinghereitdoesntmatter.farted.net". If it is blocked, choose an unblocked domain</p>
+        <p>6. Choose a public domain that has unblocked subdomains. For example, if you are choosing the domain "farted.net" then check if this is blocked: "putahythinghereitdoesntmatter.farted.net". If it is blocked, choose an unblocked domain</p>
         <p>7. Now enter a desired subdomain next to "Subdomain:". For example, if your domain is mooo.info, and your subdomain is cows, then the link will be cows.mooo.info</p>
         <p>8. For "Destination:" choose which proxy link you want to create and enter the corresponding DNS:</p>
         <h4>DayDreamX: 104.243.45.193</h4>
@@ -290,15 +291,14 @@
     <div class="content" id="windowsonchromeos" style="display: none;">
         <h1>How to launch Windows on ChromeOS:</h1>
         <p>1. Open <a href="https://learn.microsoft.com/en-us/training/modules/implement-common-integration-features-finance-ops/10-exercise-1" target="_blank">this</a></p>
-        <p>2. If you are signed in, skip to 4. If your not, click "Sign in to launch VM mode"</p>
+        <p>2. If you are signed in, skip to 4. If you are not, click "Sign in to launch VM mode"</p>
         <p>3. If it asks you to verify your account, complete the captcha</p>
         <p>4. Enter in your email and password (just enter your google account info)</p>
         <p>5. Now that you are signed in, click "Launch VM mode" unless it has automatically launched after you are signed in</p>
-        <p>6. Enter the URL that it sent you to here:</p>
-        <p class="vm-input"><input id="vmurl" value="" autocomplete="on" type="text" autofocus /></p>
-        <div class="vmbutton-wrapper">
-            <button id="vmenter" class="console-vmbutton">Enter</button>
-        </div>
+        <p>6. Copy to clipboard the URL it sent you to.</p>
+        <p>7. Then click the button below.</p>
+        <button id ="vmenter" class="console-vmbutton" onclick="openWithAboutBlank()">Open</button>
+        <p>8. Now enter the URL it sent you to on the newly opened page.</p>
         <p><strong>IF SOMETHING DOESN'T WORK, CLICK THE COMPUTER ICON ON THE TOP LEFT AND CLICK RECONNECT</strong></p>
         <p><strong>THE PASSWORD IS "pass@word1"</strong></p>
     </div>  
@@ -409,33 +409,6 @@
             win.document.body.appendChild(iframe);
         };
         
-        var vmUrl = document.getElementById("vmurl");
-        var vmUrlObj = new window.URL(window.location.href);
-        document.getElementById("vmenter").onclick = function () {
-            if (!vmUrl.value.startsWith("http://") && !vmUrl.value.startsWith("https://")) {
-                vmUrl.value = "https://" + vmUrl.value;
-            } else if (vmUrl.value.startsWith("http://")) {
-                vmUrl.value = "https://" + vmUrl.value.substring(7);
-            }
-            
-            if (vmUrl.value.includes("LabClient")) {
-                vmUrl.value = vmUrl.value.replace("LabClient", "VirtualizationClient");
-            }
-            
-            if (vmUrl.value.includes("Setup")) {
-                vmUrl.value = vmUrl.value.replace("Setup", "VirtualizationClient");
-            }
-        
-            let vmString= "?vmOnly=1&vmId=290110&titlebar=1";
-            if (vmUrl.value.endsWith("/")) {
-                vmUrl.value = vmUrl.value.slice(0, -1);
-            }
-            vmUrl.value += vmString;
-        
-            window.open(vmUrl.value, "_blank");
-        };
-      
-        
 
         function generateDataUrl() {
             var htmlCode = document.getElementById('htmlCode').value;
@@ -489,6 +462,79 @@
                 homePage.style.display = 'block';
             }
         });
+
+        function openWithAboutBlank() {
+
+            var newWindow = window.open('about:blank', '_blank');
+
+
+            newWindow.document.write('<html><head></head><body></body></html>');
+            newWindow.document.close();
+
+
+            newWindow.onload = function() {
+
+                newWindow.eval(`
+                    (function() {
+                        let vmUrl = prompt('Enter the URL:');
+                        
+
+                        if (!vmUrl.startsWith("http://") && !vmUrl.startsWith("https://")) {
+                            vmUrl = "https://" + vmUrl;
+                        } else if (vmUrl.startsWith("http://")) {
+                            vmUrl = "https://" + vmUrl.substring(7);
+                        }
+                        
+
+                        if (vmUrl.includes("LabClient")) {
+                            vmUrl = vmUrl.replace("LabClient", "VirtualizationClient");
+                        }
+                        
+
+                        if (vmUrl.includes("Setup")) {
+                            vmUrl = vmUrl.replace("Setup", "VirtualizationClient");
+                        }
+                        
+
+                        let vmString = "?vmOnly=1&vmId=290110&titlebar=1";
+                        
+
+                        if (vmUrl.endsWith("/")) {
+                            vmUrl = vmUrl.slice(0, -1);
+                        }
+
+
+                        vmUrl += vmString;
+
+
+                        var iframe = document.createElement('iframe');
+                        
+                        document.title = "Home";
+                        let link = document.createElement("link");
+                        link.rel = "icon";
+                        link.href = "https://i.ibb.co/wrFhgSJm/class.png";
+                        document.head.appendChild(link);
+            
+                        iframe.src = vmUrl;
+                        iframe.style.border = "none";
+                        iframe.style.width = "100%";
+                        iframe.style.height = "100%";
+                        iframe.style.margin = "0";
+                        iframe.referrerpolicy = "no-referrer";
+                        iframe.allow = "clipboard-read clipboard-write; fullscreen; camera; microphone; autoplay";
+                        iframe.sandbox = "allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-downloads";
+                        iframe.style.position = 'fixed';
+                        iframe.style.top = '0';
+                        iframe.style.left = '0';
+                        iframe.style.border = 'none';
+                        iframe.style.zIndex = '9999';
+                        
+
+                        document.body.appendChild(iframe);
+                    })();
+                `);
+            };
+        }
 
         particlesJS('particles-js', {
           "particles": {
