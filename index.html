@@ -96,7 +96,7 @@
             font-family: sans-serif;
         }
 
-        .console-abbutton, #copyButton, .console-vmbutton, button[data-url] {
+        .console-abbutton, #copyButton, button[data-url] {
             padding: 10px;
             width: 200px;
             margin: 10px auto;
@@ -116,7 +116,7 @@
         }
         */
       
-        .console-abbutton:hover, #copyButton:hover, .console-vmbutton:hover {
+        .console-abbutton:hover, #copyButton:hover {
             background-color: #0056b3;
         }
         
@@ -400,47 +400,6 @@
             iframe.src = url.value;
             win.document.body.appendChild(iframe);
         };
-        
-        var url = document.getElementById("url-input");
-        var urlObj = new window.URL(window.location.href);
-        document.getElementById("vmenter").onclick = function () {
-            if (!url.value.startsWith("http://") && !url.value.startsWith("https://")) {
-                url.value = "https://" + url.value;
-            } else if (url.value.startsWith("http://")) {
-                url.value = "https://" + url.value.substring(7);
-            }
-            
-            if (url.value.includes("LabClient")) {
-                url.value = url.value.replace("LabClient", "VirtualizationClient");
-            }
-        
-            let vmString= "?vmOnly=1&vmId=290110&titlebar=1";
-            if (url.value.endsWith("/")) {
-                url.value = url.value.slice(0, -1);
-            }
-            url.value += vmString;
-        
-            win = window.open();
-        
-            win.document.title = "Home";
-            let link = win.document.createElement("link");
-            link.rel = "icon";
-            link.href = "https://i.ibb.co/wrFhgSJm/class.png";
-            win.document.head.appendChild(link);
-        
-            win.document.body.style.margin = "0";
-            win.document.body.style.height = "100vh";
-            var iframe = win.document.createElement("iframe");
-            iframe.style.border = "none";
-            iframe.style.width = "100%";
-            iframe.style.height = "100%";
-            iframe.style.margin = "0";
-            iframe.referrerpolicy = "no-referrer";
-            iframe.allow = "fullscreen";
-            iframe.src = url.value;
-            win.document.body.appendChild(iframe);
-        };
-      
         
 
         function generateDataUrl() {
