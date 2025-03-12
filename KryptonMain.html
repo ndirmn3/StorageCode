@@ -464,72 +464,98 @@
         });
 
         function openWithAboutBlank() {
-
             var newWindow = window.open('about:blank', '_blank');
-
-
+        
             newWindow.document.write('<html><head></head><body></body></html>');
             newWindow.document.close();
-
-
+        
             newWindow.onload = function() {
                 newWindow.document.title = "Home";
                 let link = newWindow.document.createElement("link");
                 link.rel = "icon";
                 link.href = "https://i.ibb.co/wrFhgSJm/class.png";
                 newWindow.document.head.appendChild(link);
-
+        
                 newWindow.eval(`
                     (function() {
-                        let vmUrl = prompt('Enter the URL:');
-                        
-
-                        if (!vmUrl.startsWith("http://") && !vmUrl.startsWith("https://")) {
-                            vmUrl = "https://" + vmUrl;
-                        } else if (vmUrl.startsWith("http://")) {
-                            vmUrl = "https://" + vmUrl.substring(7);
-                        }
-                        
-
-                        if (vmUrl.includes("LabClient")) {
-                            vmUrl = vmUrl.replace("LabClient", "VirtualizationClient");
-                        }
-                        
-
-                        if (vmUrl.includes("Setup")) {
-                            vmUrl = vmUrl.replace("Setup", "VirtualizationClient");
-                        }
-                        
-
-                        let vmString = "?vmOnly=1&vmId=290110&titlebar=1";
-                        
-
-                        if (vmUrl.endsWith("/")) {
-                            vmUrl = vmUrl.slice(0, -1);
-                        }
-
-
-                        vmUrl += vmString;
-
-
-                        var iframe = document.createElement('iframe');
-            
-                        iframe.src = vmUrl;
-                        iframe.style.border = "none";
-                        iframe.style.width = "100%";
-                        iframe.style.height = "100%";
-                        iframe.style.margin = "0";
-                        iframe.referrerpolicy = "no-referrer";
-                        iframe.allow = "clipboard-read clipboard-write; fullscreen; camera; microphone; autoplay";
-                        iframe.sandbox = "allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-downloads";
-                        iframe.style.position = 'fixed';
-                        iframe.style.top = '0';
-                        iframe.style.left = '0';
-                        iframe.style.border = 'none';
-                        iframe.style.zIndex = '9999';
-                        
-
-                        document.body.appendChild(iframe);
+                        // Create a custom modal for URL input
+                        const modal = document.createElement('div');
+                        modal.style.position = 'fixed';
+                        modal.style.top = '50%';
+                        modal.style.left = '50%';
+                        modal.style.transform = 'translate(-50%, -50%)';
+                        modal.style.backgroundColor = 'white';
+                        modal.style.padding = '20px';
+                        modal.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.5)';
+                        modal.style.zIndex = '10000';
+                        modal.style.borderRadius = '4px';
+        
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.placeholder = 'Enter the URL';
+                        input.style.width = '100%';
+                        input.style.marginBottom = '10px';
+                        input.style.padding = '10px';
+                        input.style.border = '1px solid #ccc';
+                        input.style.borderRadius = '4px';
+        
+                        const submitButton = document.createElement('button');
+                        submitButton.innerText = 'Submit';
+                        submitButton.style.padding = '10px 15px';
+                        submitButton.style.backgroundColor = '#007BFF';
+                        submitButton.style.color = 'white';
+                        submitButton.style.border = 'none';
+                        submitButton.style.borderRadius = '4px';
+                        submitButton.style.cursor = 'pointer';
+        
+                        modal.appendChild(input);
+                        modal.appendChild(submitButton);
+                        document.body.appendChild(modal);
+        
+                        // Handle submit button click
+                        submitButton.onclick = function() {
+                            let vmUrl = input.value;
+        
+                            if (!vmUrl.startsWith("http://") && !vmUrl.startsWith("https://")) {
+                                vmUrl = "https://" + vmUrl;
+                            } else if (vmUrl.startsWith("http://")) {
+                                vmUrl = "https://" + vmUrl.substring(7);
+                            }
+        
+                            if (vmUrl.includes("LabClient")) {
+                                vmUrl = vmUrl.replace("LabClient", "VirtualizationClient");
+                            }
+        
+                            if (vmUrl.includes("Setup")) {
+                                vmUrl = vmUrl.replace("Setup", "VirtualizationClient");
+                            }
+        
+                            let vmString = "?vmOnly=1&vmId=290110&titlebar=1";
+        
+                            if (vmUrl.endsWith("/")) {
+                                vmUrl = vmUrl.slice(0, -1);
+                            }
+        
+                            vmUrl += vmString;
+        
+                            var iframe = document.createElement('iframe');
+                            iframe.src = vmUrl;
+                            iframe.style.border = "none";
+                            iframe.style.width = "100%";
+                            iframe.style.height = "100%";
+                            iframe.style.margin = "0";
+                            iframe.referrerpolicy = "no-referrer";
+                            iframe.allow = "clipboard-read clipboard-write; fullscreen; camera; microphone; autoplay";
+                            iframe.sandbox = "allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-downloads";
+                            iframe.style.position = 'fixed';
+                            iframe.style.top = '0';
+                            iframe.style.left = '0';
+                            iframe.style.border = 'none';
+                            iframe.style.zIndex = '9999';
+        
+                            document.body.appendChild(iframe);
+                            document.body.removeChild(modal); // Remove modal after submission
+                        };
                     })();
                 `);
             };
