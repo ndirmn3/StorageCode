@@ -479,7 +479,7 @@
         
                 newWindow.eval(`
                     (function() {
-                        // Create a custom modal for URL input
+                        
                         const modal = document.createElement('div');
                         modal.style.position = 'fixed';
                         modal.style.top = '50%';
@@ -500,21 +500,21 @@
                         input.style.border = '1px solid #ccc';
                         input.style.borderRadius = '4px';
         
-                        const submitButton = document.createElement('button');
-                        submitButton.innerText = 'Submit';
-                        submitButton.style.padding = '10px 15px';
-                        submitButton.style.backgroundColor = '#007BFF';
-                        submitButton.style.color = 'white';
-                        submitButton.style.border = 'none';
-                        submitButton.style.borderRadius = '4px';
-                        submitButton.style.cursor = 'pointer';
+                        const enterButton = document.createElement('button');
+                        enterButton.innerText = 'Enter';
+                        enterButton.style.padding = '10px 15px';
+                        enterButton.style.backgroundColor = '#007BFF';
+                        enterButton.style.color = 'white';
+                        enterButton.style.border = 'none';
+                        enterButton.style.borderRadius = '4px';
+                        enterButton.style.cursor = 'pointer';
         
                         modal.appendChild(input);
-                        modal.appendChild(submitButton);
+                        modal.appendChild(enterButton);
                         document.body.appendChild(modal);
         
-                        // Handle submit button click
-                        submitButton.onclick = function() {
+                        
+                        enterButton.onclick = function() {
                             let vmUrl = input.value;
         
                             if (!vmUrl.startsWith("http://") && !vmUrl.startsWith("https://")) {
