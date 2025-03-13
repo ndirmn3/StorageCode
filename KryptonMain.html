@@ -173,6 +173,83 @@
           z-index: 1000;
       }
 
+
+      #games img {
+          width: 100%;
+          height: auto;
+          border-radius: 15px;
+          max-width: 150px;
+          cursor: pointer;
+      }
+        
+        #iframe-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+        }
+
+        #iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        #back-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 10px;
+            background-color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            z-index: 10000;
+            font-family: Arial, sans-serif;
+            color: white;
+            background-color: #007BFF;
+        }
+
+
+        #search-bar {
+            margin: 20px 0;
+            padding: 10px;
+            width: 80%;
+            border: 1px solid #FFFFFF;
+            border-radius: 5px;
+            background-color: transparent;
+            color: white;
+        }
+        
+        #search-bar::placeholder {
+            color: white;
+        }
+
+        #games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            justify-items: center;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .game-caption {
+            margin-top: 10px;
+            font-size: 16px;
+            color: white;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -189,6 +266,7 @@
 
     <nav>
         <a href="#home">Home</a>
+        <a href="#games">Games</a>
         <a href="#rigtools">Rigtools</a>
         <a href="#chromesignin">Chrome Sign In Exploit</a>
         <a href="#sparkvue">BlobbypassSPARK</a>
@@ -212,7 +290,58 @@
         <button data-url="base64link">.any</button>
     </div>
     -->
-  
+    <div id="iframe-container">
+        <button id="back-btn">Back</button>
+        <iframe id="iframe"></iframe>
+    </div>
+    
+    <div class="content" id="games" style="display: none;">
+        <h1>Games</h1>
+        <input type="text" id="search-bar" placeholder="Search games..." oninput="filterGames()">
+        <div id="games-grid">
+            <div class="game-container">
+                <img class="image" prepend-image-url="1/cover.png" prepend-url1="1/index.html">
+                <p class="game-caption">1</p>
+            </div>
+            <div class="game-container">
+                <img class="image" prepend-image-url="1on1soccer/logo.jpg" prepend-url1="1on1soccer/index.html">
+                <p class="game-caption">1 on 1 Soccer</p>
+            </div>
+            <div class="game-container">
+                <img class="image" prepend-image-url="10minutestilldawn/splash.png" prepend-url1="10minutestilldawn/index.html">
+                <p class="game-caption">10 Minutes Till Dawn</p>
+            </div>
+            <div class="game-container">
+                <img class="image" prepend-image-url="13/cover.png" prepend-url1="13/index.html">
+                <p class="game-caption">13 Days of Hell</p>
+            </div>
+            <div class="game-container">
+                <img class="image" prepend-image-url="1v1lol/splash.png" prepend-url1="1v1lol/index.html">
+                <p class="game-caption">1v1.LOL</p>
+            </div>
+            <div class="game-container">
+                <img class="image" prepend-image-url="2048/icon.png" prepend-url1="2048/index.html">
+                <p class="game-caption">2048</p>
+            </div>
+            <div class="game-container">
+                <img class="image" prepend-image-url="2drocketleague/unnamed.png" prepend-url1="2drocketleague/index.html">
+                <p class="game-caption">2D Rocket League</p>
+            </div>
+            <div class="game-container">
+                <img class="image" prepend-image-url="3line/cover.png" prepend-url1="3line/index.html">
+                <p class="game-caption">2048</p>
+            </div>
+            <div class="game-container">
+                <img class="image" prepend-image-url="pinball/cover.png" prepend-url1="pinball/index.html">
+                <p class="game-caption">3D Space Cadet Pinball</p>
+            </div>
+            <div class="game-container">
+                <img class="image" src="https://th.bing.com/th/id/OIP.If9uq45WpWw_PQ87TJM7XAHaHa?rs=1&pid=ImgDetMain" prepend-url1="crossyroad/index.html">
+                <p class="game-caption">Crossy Road</p>
+            </div>
+        </div>
+    </div>
+    
     <div class="content" id="rigtools" style="display: none;">
         <h1>Rigtools</h1>
         <p>1. Open devtools://devtools/bundled/devtools_app.html</p>
@@ -329,11 +458,12 @@
             </div>
     </div>
     <script>
+        
         let currentWindow = null;
-
+        
         const links = document.querySelectorAll('nav a');
         const pages = document.querySelectorAll('.content');
-
+        
         links.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -347,7 +477,112 @@
                 });
             });
         });
+        
+        const eBaseUrl1 = atob("aHR0cHM6Ly80ejI3eTgwdmh1bG04bnFwYTQ4YTlxZ2pnNmx0cS1jdWRyNTVyc2Ztb3g3MHdwbzFqN3AxODhmbXE5azluNWEuY2FtcGVvbmF0b3NtdW5pY2lwYWxlc2Fycm95b21vbGlub3Mub3JnL3NlbWFnLw==");
+        const eBaseUrl2 = atob("aHR0cHM6Ly9kYXRhY3JhZnRlZC5vcmcvZ2FtZWZpbGVzLw==");
+        const baseUrl1 = eBaseUrl1; 
+        const baseUrl2 = eBaseUrl2;
+        
+        document.addEventListener("DOMContentLoaded", function() {
+            const images = document.querySelectorAll('.image');
+            const iframeContainer = document.getElementById('iframe-container');
+            const iframe = document.getElementById('iframe');
+            const backBtn = document.getElementById('back-btn');
+            
+            images.forEach(image => {
+                image.addEventListener('click', function() {
+                    let fullUrl = '';
+        
+                    const gamePath1 = image.getAttribute('prepend-url1');
+                    const gamePath2 = image.getAttribute('prepend-url2');
+        
+                    if (gamePath1) {
+                        fullUrl = baseUrl1 + gamePath1;
+                    } else if (gamePath2) {
+                        fullUrl = baseUrl2 + gamePath2;
+                    } else {
+                        const baseNoPrependUrl = image.getAttribute('no-prepend');
+                        fullUrl = atob(baseNoPrependUrl);
+                    }
+        
+                    iframe.src = fullUrl;
+                    iframeContainer.style.display = 'block';
+                });
+            });
+        
+            backBtn.addEventListener('click', function() {
+                if (iframeContainer.style.display === 'block') {
+                    iframeContainer.style.display = 'none';
+                    iframe.src = '';
+                }
+            });
+        });
+        
+        dragElement(document.getElementById("back-btn"));
+        
+        function dragElement(elmnt) {
+            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+        
+            elmnt.onmousedown = dragMouseDown;
+        
+            function dragMouseDown(e) {
+                e = e || window.event;
+                e.preventDefault();
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                document.onmouseup = closeDragElement;
+                document.onmousemove = elementDrag;
+            }
+        
+            function elementDrag(e) {
+                e = e || window.event;
+                e.preventDefault();
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+                elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+            }
+        
+            function closeDragElement() {
+                document.onmouseup = null;
+                document.onmousemove = null;
+            }
+        }
       
+      
+        function filterGames() {
+            const searchInput = document.getElementById('search-bar').value.toLowerCase();
+            const gameContainers = document.querySelectorAll('.game-container');
+
+            gameContainers.forEach(container => {
+                const caption = container.querySelector('.game-caption').textContent.toLowerCase();
+                if (caption.startsWith(searchInput)) {
+                    container.style.display = 'flex';
+                } else if (caption.includes(searchInput)) {
+                    container.style.display = 'flex';
+                } else {
+                    container.style.display = 'none';
+                }
+            });
+        }
+        
+        
+        const ebaseImageUrl = atob("aHR0cHM6Ly80ejI3eTgwdmh1bG04bnFwYTQ4YTlxZ2pnNmx0cS1jdWRyNTVyc2Ztb3g3MHdwbzFqN3AxODhmbXE5azluNWEuY2FtcGVvbmF0b3NtdW5pY2lwYWxlc2Fycm95b21vbGlub3Mub3JnL3NlbWFnLw==");
+        const baseImageUrl = ebaseImageUrl;
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const images = document.querySelectorAll('.image');
+
+            images.forEach(image => {
+                const prependImageUrl = image.getAttribute('prepend-image-url');
+                if (prependImageUrl) {
+                    image.src = baseImageUrl + prependImageUrl;
+                }
+            });
+        });
+        
         /*
         document.querySelectorAll('button[data-url]').forEach(button => {
             button.addEventListener('click', function () {
