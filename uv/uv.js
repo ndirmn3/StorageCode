@@ -4,17 +4,17 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 let url = urlParams.get('site');
 const link = document.getElementById("link");
-link.href = "https://extrememath.net";
-link.innerHTML = "extrememath.net";
+link.href = "https://kryptontools.pages.dev/";
+link.innerHTML = "Back";
 
 if(!url){
-    document.body.innerHTML = 'NO URL SPECIFIED';
+    document.body.innerHTML = 'No URL Specified';
     document.body.style = "color: white; text-align: center; font-size: 4vw; ";
 } else if(!isUrl(url)){
-    document.body.innerHTML = 'NOT A VALID URL';
+    document.body.innerHTML = 'Not a Valid URL';
     document.body.style = "color: white; text-align: center; font-size: 4vw; ";
 } else if(url.includes('google')){
-    document.body.innerHTML = 'GOOGLE IS NOT ALLOWED';
+    document.body.innerHTML = 'Google is Not Allowed';
     document.body.style = "color: white; text-align: center; font-size: 4vw; ";
 } else {
     setTimeout(() => {
