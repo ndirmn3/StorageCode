@@ -32,7 +32,7 @@
         }
         
         .moving-gradient {
-          background: linear-gradient(135deg, #004080, #007099, #00A070);
+          background: linear-gradient(135deg, #004080, #007099, #00A070, #004080, #007099, #00A070);
           background-size: 300% 300%;
           animation: gradientMove 30s linear infinite;
         }
@@ -284,6 +284,69 @@
             color: white;
             text-align: center;
         }
+        
+        .dropbtn {
+            background-color: transparent;
+            color: white;
+            padding: 0;
+            margin: 0 1rem;
+            font-weight: bold;
+            font-size: 13px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+            /* vertical-align: 20px; */
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            margin: 0 1rem;
+            height: 100%;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: linear-gradient(135deg, #004080, #007099, #00A070, #004080, #007099, #00A070);
+            background-size: 300% 300%;
+            animation: gradientMove 30s linear infinite;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
+            z-index: 1;
+            border-radius: 5px;
+            top: 100%;
+            left: 0;
+            margin-top: 0px;
+        }
+        
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 13px;
+            text-align: left;
+        }
+        
+        .dropdown-content a:hover {
+            color: #FFFFFF;
+            transform: scale(1.075);
+            text-shadow: 0 0 1px #FFFFFF, 0 0 2px #FFFFFF;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        .dropdown:hover .dropbtn {
+            color: #FFFFFF;
+            transform: scale(1.075);
+            text-shadow: 0 0 1px #FFFFFF, 0 0 2px #FFFFFF;
+        }
+
     </style>
 </head>
 <body>
@@ -301,13 +364,18 @@
     <nav>
         <a href="#home">Home</a>
         <a href="#games">Games & Apps</a>
-        <a href="#rigtools">Rigtools</a>
-        <a href="#chromesignin">Chrome Sign In Exploit</a>
-        <a href="#sparkvue">BlobbypassSPARK</a>
-        <a href="#newlinks">Creating Alternative Links</a>
-        <a href="#windowsonchromeos">Windows on ChromeOS</a>
-        <a href="#abopener">About Blank Opener</a>
-        <a href="#dataurlgenerator">Data URL Generator</a>
+        <div class="dropdown">
+            <button class="dropbtn">Exploits & Tools</button>
+            <div class="dropdown-content">
+                <a href="#rigtools">Rigtools</a>
+                <a href="#chromesignin">Chrome Sign In Exploit</a>
+                <a href="#sparkvue">BlobbypassSPARK</a>
+                <a href="#newlinks">Creating Alternative Links</a>
+                <a href="#windowsonchromeos">Windows on ChromeOS</a>
+                <a href="#abopener">About Blank Opener</a>
+                <a href="#dataurlgenerator">Data URL Generator</a>
+            </div>
+        </div>
     </nav>
 
     <div class="content" id="home">
