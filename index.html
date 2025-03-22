@@ -384,7 +384,7 @@
         </h1>
         <p>Krypton has a powerful collection of utilities including an about:blank opener, a data:text URL opener and generator (thx to <a href="https://github.com/Blobby-Boi" target="_blank">Blobby Boi</a> for some of the code), and more. Krypton will not be updated from 3/16/25 to 3/21/25.</p>
         <br>
-        <img src="https://visit-counter.vercel.app/counter.png?page=https%3A%2F%2Fu8hwxxvlys7jekt2nmys11zwvuirhmuwyduxwr3vrstuharu6qmhds2x7l.pages.dev%2F&s=12&c=ffffff&bg=00000000&no=10&ff=electrolize&tb=&ta=Visits" alt="visits">
+        <img id="visitCounter" alt="visits">
     </div>
 
     <!--
@@ -622,6 +622,10 @@
                 });
             });
         });
+
+        const iframeUrl = atob("aHR0cHM6Ly91OGh3eHh2bHlzN2pla3Qybm15czExend2dWlyaG11d3lkdXh3cjN2cnN0dWhhcnU2cW1oZHMyeDdsLnBhZ2VzLmRldi8=");
+        let img = document.getElementById("visitCounter");
+        img.src = `https://visit-counter.vercel.app/counter.png?page=${encodeURIComponent(iframeUrl)}&s=12&c=ffffff&bg=00000000&no=10&ff=electrolize&tb=&ta=Visits`;
         
         const eBaseUrls = atob("aHR0cHM6Ly80ejI3eTgwdmh1bG04bnFwYTQ4YTlxZ2pnNmx0cS1jdWRyNTVyc2Ztb3g3MHdwbzFqN3AxODhmbXE5azluNWEuY2FtcGVvbmF0b3NtdW5pY2lwYWxlc2Fycm95b21vbGlub3Mub3JnL3NlbWFnLw==");
         const eBaseUrlem = atob("aHR0cHM6Ly9pbm5vdjhpdmV0ZWNoLmNvbS8=");
