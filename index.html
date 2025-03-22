@@ -861,19 +861,36 @@
         });
 
         function openWithAboutBlank() {
-            var newWindow = window.open('about:blank', '_blank');
-        
-            newWindow.document.write('<html><head></head><body></body></html>');
-            newWindow.document.close();
-        
-            newWindow.onload = function() {
-                newWindow.document.title = "Home";
-                let link = newWindow.document.createElement("link");
+            let newBlankTab = window.open("about:blank", "_blank");
+            if (newBlankTab) {
+                newBlankTab.document.write(`
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <title>Google</title>
+                        <link rel="icon" type="image/png" href="https://i.ibb.co/gZG0HCZq/google.png">
+                        <meta charset="UTF-8">
+                        <style>
+                            body {
+                                margin: 0;
+                                height: 100vh;
+                                padding: 0;
+                                overflow: hidden;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                    </body>
+                    </html>
+                `);
+
+                newBlankTab.document.close();
+                newBlankTab.document.title = "Google";
+                let link = newBlankTab.document.createElement("link");
                 link.rel = "icon";
-                link.href = "https://i.ibb.co/wrFhgSJm/class.png";
-                newWindow.document.head.appendChild(link);
+                link.href = "https://i.ibb.co/gZG0HCZq/google.png";
         
-                newWindow.eval(`
+                newBlankTab.eval(`
                     (function() {
                         
                         const modal = document.createElement('div');
@@ -951,7 +968,7 @@
                             iframe.style.zIndex = '9999';
         
                             document.body.appendChild(iframe);
-                            document.body.removeChild(modal); // Remove modal after submission
+                            document.body.removeChild(modal);
                         };
                     })();
                 `);
