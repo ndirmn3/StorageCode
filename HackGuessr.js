@@ -1,32 +1,28 @@
-javascript:(function () {
-    console.log("Script loaded, initializing map...");
+(function () {
 
     loadLeaflet();
 
     createInfoScreen();
     let infoVisible = true;
+
+    let loadingIndicator = createLoadingIndicator();
+    document.body.appendChild(loadingIndicator);
   
     document.addEventListener("keydown", function (e) {
-        console.log("Key pressed:", e.key, "| Code:", e.code);
     
         if (e.key.toLowerCase() === "r") {
-            console.log("R key detected. Reloading map...");
             reloadScript();
         } else if (e.key.toLowerCase() === "x") {
-            console.log("X key detected. Toggling popup visibility...");
             toggleVisibility();
         } else if (e.key.toLowerCase() === "t") {
-            console.log("T key detected. Toggling info screen...");
             toggleInfoScreen();
         } else if (e.key.toLowerCase() === "q") {
-            console.log("Q key detected. Zooming in...");
             if (!zoomInterval) {
                 zoomInterval = setInterval(function () {
                     map.zoomIn();
                 }, 10);
             }
         } else if (e.key.toLowerCase() === "e") {
-            console.log("E key detected. Zooming out...");
             if (!zoomInterval) {
                 zoomInterval = setInterval(function () {
                     map.zoomOut();
@@ -37,26 +33,12 @@ javascript:(function () {
     });
 
     document.addEventListener("keyup", function (e) {
-        console.log("Key released:", e.key, "| Code:", e.code);
     
         if (e.key.toLowerCase() === "q" || e.key.toLowerCase() === "e") {
-            console.log("Key released. Stopping zooming...");
             clearInterval(zoomInterval);
             zoomInterval = null;
         }
     });
-
-    document.addEventListener("keyup", function (e) {
-        console.log("Key released:", e.key, "| Code:", e.code);
-    
-        if (e.key.toLowerCase() === "q" || e.key.toLowerCase() === "e") {
-            console.log("Key released. Stopping zooming...");
-            clearInterval(zoomInterval);
-            zoomInterval = null;
-        }
-    });
-
-
 
     let containerX = 8;
     let containerY = window.innerHeight - 288;
@@ -66,9 +48,26 @@ javascript:(function () {
 
     let visible = true;
 
+    function createLoadingIndicator() {
+      let indicator = document.createElement('div');
+      indicator.id = 'loading-indicator';
+      indicator.style = `
+          position: fixed;
+          bottom: 10px;
+          right: 10px;
+          width: 50px;
+          height: 50px;
+          background: url('https://i.imgur.com/8vY2ovQ.gif') no-repeat center center;
+          background-size: contain;
+          display: none;
+          z-index: 10001;
+      `;
+      return indicator;
+  }
+
+
     function loadLeaflet() {
         if (!window.L) {
-            console.log("Loading Leaflet.js...");
             let link = document.createElement("link");
             link.rel = "stylesheet";
             link.href = "https://unpkg.com/leaflet/dist/leaflet.css";
@@ -77,12 +76,10 @@ javascript:(function () {
             let script = document.createElement("script");
             script.src = "https://unpkg.com/leaflet/dist/leaflet.js";
             script.onload = function () {
-                console.log("Leaflet.js loaded.");
                 runScript();
             };
             document.body.appendChild(script);
         } else {
-            console.log("Leaflet.js already loaded.");
             runScript();
         }
     }
@@ -91,12 +88,10 @@ javascript:(function () {
         let container = document.getElementById("map-container");
 
         if (!visible) {
-            
             containerX = 8;
             containerY = window.innerHeight - 288;
             visible = true;
         } else if (container) {
-            
             containerX = container.offsetLeft;
             containerY = container.offsetTop;
         }
@@ -104,18 +99,15 @@ javascript:(function () {
         runScript();
     }
 
-
-
     function runScript() {
-        console.log("Initializing map...");
         createUI();
-        let coordinates = extractCoordinates();
+        let coordinates = extractLocationFromIframe();
 
         if (!coordinates) {
             return;
         }
 
-        map = L.map("cheat-map").setView([coordinates.lat, coordinates.lng], 15);
+        map = L.map("cheat-map").setView([coordinates.lat, coordinates.long], 15);
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
             attribution: "&copy; OpenStreetMap contributors"
         }).addTo(map);
@@ -127,11 +119,10 @@ javascript:(function () {
             popupAnchor: [0, -32]
         });
 
-        L.marker([coordinates.lat, coordinates.lng], { icon: customIcon })
-            .bindPopup(`Lat: ${coordinates.lat}<br>Lng: ${coordinates.lng}`)
+        L.marker([coordinates.lat, coordinates.long], { icon: customIcon })
+            .bindPopup(`Lat: ${coordinates.lat}<br>Lng: ${coordinates.long}`)
             .addTo(map);
 
-        console.log("Map initialized successfully with custom marker.");
     }
 
     function createUI() {
@@ -185,7 +176,6 @@ javascript:(function () {
             cursor: pointer;
         `;
         reloadButton.onclick = function () {
-            console.log("Button clicked. Reloading map...");
             reloadScript();
         };
         container.appendChild(reloadButton);
@@ -226,8 +216,6 @@ javascript:(function () {
             }
         };
         container.appendChild(openMapButton);
-
-
     }
 
     function dragElement(event) {
@@ -261,64 +249,70 @@ javascript:(function () {
         };
     }
 
-    function extractCoordinates() {
-        try {
-            console.log("Extracting coordinates...");
-            const iframe = document.querySelector("iframe");
-            if (iframe) {
-                console.log("Iframe found:", iframe);
-                const src = iframe.getAttribute("src");
-                if (src) {
-                    const urlParams = new URLSearchParams(src.split("?")[1]);
-                    const lat = urlParams.get("lat");
-                    const lng = urlParams.get("long");
-                    if (lat && lng) {
-                        console.log("Extracted coordinates:", lat, lng);
-                        hideNotification();
-                        return { lat: parseFloat(lat), lng: parseFloat(lng) };
-                    }
-                }
-            }
-        } catch (error) {
-            console.error("Error extracting coordinates:", error);
+    function showLoadingIndicator() {
+        if (loadingIndicator) {
+            loadingIndicator.style.display = 'block';
         }
-        console.warn("No coordinates found.");
-        showNotification();
+    }
+    
+    function hideLoadingIndicator() {
+        if (loadingIndicator) {
+            loadingIndicator.style.display = 'none';
+        }
+    }
+
+    function extractLocationFromIframe() {
+        showLoadingIndicator();
+        const iframe = document.querySelector('iframe[src^="/svEmbed"]');
+        if (!iframe) {
+            hideLoadingIndicator();
+            return null;
+        }
+    
+        const urlParams = new URLSearchParams(iframe.src.split('?')[1]);
+        const lat = parseFloat(urlParams.get('lat'));
+        const long = parseFloat(urlParams.get('long'));
+    
+        if (!isNaN(lat) && !isNaN(long)) {
+            hideLoadingIndicator();
+            return { lat, long, timestamp: new Date() };
+        }
+        hideLoadingIndicator();
         return null;
     }
 
-  function toggleVisibility() {
-      let container = document.getElementById("map-container");
-      if (!container) return;
+    function toggleVisibility() {
+        let container = document.getElementById("map-container");
+        if (!container) return;
 
-      if (visible) {
+        if (visible) {
 
-          container.style.width = "40px";
-          container.style.height = "40px";
-          container.style.overflow = "hidden";
-          container.style.display = "flex";
-          container.style.alignItems = "center";
-          container.style.justifyContent = "center";
-          container.innerHTML = "<div id='restore-pin' style='cursor: grab; font-size: 20px;'>📌</div>";
+            container.style.width = "40px";
+            container.style.height = "40px";
+            container.style.overflow = "hidden";
+            container.style.display = "flex";
+            container.style.alignItems = "center";
+            container.style.justifyContent = "center";
+            container.innerHTML = "<div id='restore-pin' style='cursor: grab; font-size: 20px;'>📌</div>";
 
-          let pin = document.getElementById("restore-pin");
-          pin.onmousedown = dragElement;
+            let pin = document.getElementById("restore-pin");
+            pin.onmousedown = dragElement;
 
-          pin.oncontextmenu = function (e) {
-            e.preventDefault();
+            pin.oncontextmenu = function (e) {
+              e.preventDefault();
+              createUI();
+              loadLeaflet();
+            };
+
+        } else {
             createUI();
             loadLeaflet();
-          };
+        }
 
-      } else {
-          createUI();
-          loadLeaflet();
-      }
+        visible = !visible;
+    }
 
-      visible = !visible;
-  }
-
-      function createInfoScreen() {
+    function createInfoScreen() {
         let infoContainer = document.createElement("div");
         infoContainer.id = "info-screen";
         infoContainer.style = `
@@ -350,100 +344,18 @@ javascript:(function () {
             <p>To zoom in / out, use the on-screen "+" and "−" buttons, press "Q" or "E," or use the mouse wheel.</p>
             <p>To pan the map, click and drag.</p>
             <p>To open the current coordinates, click "Open Map."</p>
-            <p>To view the coordinates, click on the marker.</p>
-            <p>To reset the popup’s position, hide it and reload.</p>
-            <p>To open or close this help screen, press "T."</p>
-            <br>
-            <p><strong>Press T to close this screen.</strong></p>
-            <p><strong>If key binds are not working, click the popup map once and try again.</strong></p>
-            <br>
-            <p>Made by evan</p>
+            <p>To view the coordinates, click on the map marker.</p>
         `;
-
         document.body.appendChild(infoContainer);
     }
 
     function toggleInfoScreen() {
         let infoScreen = document.getElementById("info-screen");
         if (infoScreen) {
-            infoScreen.remove();
+            document.body.removeChild(infoScreen);
         } else {
             createInfoScreen();
         }
+        infoVisible = !infoVisible;
     }
-
-
-    function showNotification() {
-        let existingNotification = document.getElementById("notification-popup");
-        if (existingNotification) return;
-    
-        let notification = document.createElement("div");
-        notification.id = "notification-popup";
-        notification.style = `
-            position: fixed;
-            bottom: 8px;
-            right: 8px;
-            width: 250px;
-            height: 50px;
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 10px;
-            border-radius: 10px;
-            text-align: center;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10001;
-        `;
-        notification.innerHTML = `
-            <p><strong>NO COORDINATES DETECTED</strong> Join a WorldGuessr game and reload the map.</p>
-        `;
-    
-        document.body.appendChild(notification);
-    }
-    
-    function hideNotification() {
-        let notification = document.getElementById("notification-popup");
-        if (notification) {
-            notification.remove();
-        }
-    }
-
-    function showMapErrorPopup() {
-        let existingPopup = document.getElementById("map-error-popup");
-        if (existingPopup) return;
-    
-        let popup = document.createElement("div");
-        popup.id = "map-error-popup";
-        popup.style = `
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 250px;
-            height: 50px;
-            background: rgba(255, 0, 0, 0.8);
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            font-family: Arial, sans-serif;
-            font-size: 16px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 10001;
-        `;
-        popup.innerHTML = `<p><strong>ERROR: Map is not initialized yet!</strong></p>`;
-    
-        document.body.appendChild(popup);
-    
-        setTimeout(() => {
-            popup.remove();
-        }, 2000);
-    }
-
 })();
