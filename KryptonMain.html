@@ -368,6 +368,7 @@
             <div class="dropdown-content">
                 <a href="#rigtools">Rigtools</a>
                 <a href="#chromesignin">Chrome Sign In Exploit</a>
+                <a href="#ublobebm">uBlobeBM</a>
                 <a href="#sparkvue">BlobbypassSPARK</a>
                 <a href="#newlinks">Creating Alternative Links</a>
                 <a href="#windowsonchromeos">Windows on ChromeOS</a>
@@ -526,6 +527,24 @@
         <p><strong>THIS WILL ONLY WORK ON CHROMEBOOK</strong></p>
         <p><strong>THIS MAY NOT WORK ON SCHOOL NETWORKS</strong></p>
         <p><strong>THIS MAY NOT WORK FOR SOME PEOPLE</strong></p>
+    </div>
+
+    <div class="content" id="ublobebm" style="display: none;">
+        <h1>uBlobeBM</h1>
+        <p>uBLobeBM is a bookmarklet executer made by <a href="https://github.com/Blobby-Boi" target="_blank">Blobby Boi</a> that is used by people who are unable to execute javascript through bookmarklets or the console</p>
+        <h3>Setting Up uBlobeBM</h3>
+        <p>1. Make sure you have <a href="https://chromewebstore.google.com/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm" target="_blank">uBlock Origin</a> downloaded</p>
+        <p>2. Once it is downloaded, go here chrome-extension://cjpalhdlnbpafiamejdnhcphjbkeiagm/advanced-settings.html</p>
+        <p>3. Scroll down to the bottom and change "unset" next to "userResourcesLocation" to "https://raw.githubusercontent.com/Blobby-Boi/uBlobeBM/refs/heads/main/blob.js"</p>
+        <p>4. Click "Apply changes"</p>
+        <p>5. Now open chrome-extension://cjpalhdlnbpafiamejdnhcphjbkeiagm/1p-filters.html and enter "*##+js(blob.js, set-constant, CSP_POLICY, null)"</p>
+        <p>6. Click "Apply changes"</p>
+        <h3>Using uBlobeBM</h3>
+        <p>1. Open a website you want to run your javascript code on</p>
+        <p>2. Press CTRL + Shift + ~ to open uBlobeBM.</p>
+        <P>3. If nothing happens, the website will have strong restrictions, and uBlobeBM will fail to work. If uBlobeBM appears, follow instructions from there</P>
+        <p><strong>THIS MAY NOT WORK ON SOME WEBSITES</strong></p>
+        <p><strong>IF YOUR BOOKMARKLET CODE STARTS WITH "javascript:" AND NOTHING HAPPENS OR AN ERROR SHOWS, THEN REMOVE THE "javascript:"</strong></p>
     </div>
 
     <div class="content" id="sparkvue" style="display: none;">
