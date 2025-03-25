@@ -3,7 +3,7 @@
   function open(open, submission = !1) {
     let enteredUrl = window.open(submission ? "about:blank" : "https://classroom.google.com");
     enteredUrl.document.write(
-      '<body style="margin:0;">\n<title>Home</title>\n<embed src="https://hexbois.com" style="width:100vw;height:100vh;">\n<script>\nwindow.addEventListener("beforeunload", (ev)=>{  \n  ev.returnValue = "chromeCheck"  \n  ev.preventDefault() \n  return "aa" \n }) \n </script>  \n  </body> \n  '
+      '<body style="margin:0;">\n<title>Home</title>\n<embed src="https://hexbois.com" style="width:100vw;height:100vh;">\n<script>\nwindow.addEventListener("beforeunload", (ev)=>{  \n  ev.returnValue = "chromeCheck"  \n  ev.preventDefault() \n  return "aa" \n }) \n </script>  \n  </body>'
     );
     let r = enteredUrl.document.createElement("link");
     (r.rel = "icon"),
@@ -17,7 +17,7 @@
 
   
     (document.body.innerHTML = chromeCheck
-      ? '<body>\r\n<head>\r\n<meta charset="UTF-8">\r\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\r\n<title>Launcher</title>\r\n<head>\r\n<style id="style"></style>\r\n<form id="enter-url-form">\r\n<input id="enter-url" type="text" placeholder="Enter URL...">\r\n</form>\r\n</body>'
+      ? '<body>\r\n<head>\r\n<meta charset="UTF-8">\r\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\r\n<title>Launcher</title>\r\n</head>\r\n<style id="style"></style>\r\n<form id="enter-url-form">\r\n<input id="enter-url" type="text" placeholder="Enter URL...">\r\n</form>\r\n</body>'
       : '<body>\r\n<head>\r\n<meta charset="UTF-8">\r\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\r\n<title>Launcher Error</title>\r\n</head>\r\n<style id="style"></style>\r\n<p>This launcher is only functional on Chrome.</p>\r\n</body>'),
     (document.querySelector("#style").innerHTML = "/*stylehere*/"),
     
@@ -32,3 +32,46 @@
         n.appendChild(enteredUrl);
       }));
 })();
+
+/*
+first:
+<body style="margin:0;">
+  <title>Home</title>
+  <embed src="https://hexbois.com" style="width:100vw;height:100vh;">
+  <script>
+  window.addEventListener("beforeunload", (ev)=>{
+    ev.returnValue = "chromeCheck"
+    ev.preventDefault()
+    return "aa"
+  })
+  </script>
+</body>
+
+second:
+<body>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Launcher</title>
+  </head>
+  <style id="style"></style>
+  <form id="enter-url-form">
+    <input id="enter-url" type="text" placeholder="Enter URL...">
+  </form>
+</body>
+
+third:
+<body>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Launcher Error</title>
+  </head>
+  <style id="style"></style>
+  <p>This launcher is only functional on Chrome.</p>
+</body>
+*/
+
+
+
+
