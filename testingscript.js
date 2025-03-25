@@ -3,7 +3,7 @@
   function open(open, submission = !1) {
     let enteredUrl = window.open(submission ? "about:blank" : "https://classroom.google.com");
     enteredUrl.document.write(
-      '\n        <body style="margin:0;">\n            <title>Home</title>\n\n            <embed src="https://hexbois.com" style="width:100vw;height:100vh;">\n\n            <script>\n            window.addEventListener("beforeunload", (ev)=>{\n                ev.returnValue = "chromeCheck"\n                ev.preventDefault()\n                return "aa"\n            })\n            </script>\n        </body>\n    '
+      '<body style="margin:0;">\n<title>Home</title>\n<embed src="https://hexbois.com" style="width:100vw;height:100vh;">\n<script>\nwindow.addEventListener("beforeunload", (ev)=>{  \n  ev.returnValue = "chromeCheck"  \n  ev.preventDefault() \n  return "aa" \n }) \n </script>  \n  </body> \n  '
     );
     let r = enteredUrl.document.createElement("link");
     (r.rel = "icon"),
@@ -17,8 +17,8 @@
 
   
     (document.body.innerHTML = chromeCheck
-      ? '<body>\r\n    <head>\r\n        <meta charset="UTF-8">\r\n        <meta name="viewport" content="width=device-width, initial-scale=1.0">\r\n        <title>Launcher</title>\r\n    \r\n    </head>\r\n    <style id="style"></style>\r\n\r\n    <form id="enter-url-form"> \r\n        <input id="enter-url" type="text" placeholder="Enter URL...">\r\n    </form>\r\n   <div id="games"></div>\r\n\r\n</body>'
-      : '<body>\r\n    <head>\r\n        <meta charset="UTF-8">\r\n        <meta name="viewport" content="width=device-width, initial-scale=1.0">\r\n        <title>Launcher Error</title>\r\n    \r\n    </head>\r\n    <style id="style"></style>\r\n\r\n    <p>This launcher is only functional on Chromium based browsers.</p>\r\n\r\n</body>'),
+      ? '<body>\r\n<head>\r\n<meta charset="UTF-8">\r\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\r\n<title>Launcher</title>\r\n<head>\r\n<style id="style"></style>\r\n<form id="enter-url-form">\r\n<input id="enter-url" type="text" placeholder="Enter URL...">\r\n</form>\r\n</body>'
+      : '<body>\r\n<head>\r\n<meta charset="UTF-8">\r\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\r\n<title>Launcher Error</title>\r\n</head>\r\n<style id="style"></style>\r\n<p>This launcher is only functional on Chrome.</p>\r\n</body>'),
     (document.querySelector("#style").innerHTML = "/*stylehere*/"),
     
     chromeCheck &&
