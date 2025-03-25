@@ -3,7 +3,7 @@
   function open(open, submission = !1) {
     let enteredUrl = window.open(submission ? "about:blank" : "https://classroom.google.com");
     enteredUrl.document.write(
-      '<body style="margin:0;">\n<title>Home</title>\n<embed src="https://hexbois.com" style="width:100vw;height:100vh;">\n<script>\nwindow.addEventListener("beforeunload", (ev)=>{  \n  ev.returnValue = "chromeCheck"  \n  ev.preventDefault() \n  return "aa" \n }) \n </script>  \n  </body>'
+      '<body style="margin:0;">\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>Home</title>\n<link rel="icon" href="https://i.ibb.co/wrFhgSJm/class.png">\n<embed src="https://google.com/" style="width:100vw;height:100vh;">\n</body>'
     );
     let r = enteredUrl.document.createElement("link");
     (r.rel = "icon"),
@@ -36,15 +36,11 @@
 /*
 first:
 <body style="margin:0;">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home</title>
-  <embed src="https://hexbois.com" style="width:100vw;height:100vh;">
-  <script>
-  window.addEventListener("beforeunload", (ev)=>{
-    ev.returnValue = "chromeCheck"
-    ev.preventDefault()
-    return "aa"
-  })
-  </script>
+  <link rel="icon" href="https://i.ibb.co/wrFhgSJm/class.png">
+  <embed src="https://google.com/" style="width:100vw;height:100vh;">
 </body>
 
 second:
