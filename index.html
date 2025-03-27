@@ -233,21 +233,6 @@
             z-index: 1000;
         }
 
-        #back-btn {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            padding: 10px;
-            background-color: #fff;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
-            z-index: 10000;
-            font-family: Arial, sans-serif;
-            color: white;
-            background-color: #007BFF;
-        }
-
 
         #search-bar {
             margin: 20px 0;
@@ -394,12 +379,7 @@
         <button data-url="base64link">.any</button>
     </div>
     -->
-    
-    <div id="iframe-container">
-        <button id="back-btn">Back</button>
-        <h1 class="loading">Loading</h1>
-        <iframe id="iframe"></iframe>
-    </div>
+
     
     <div class="content" id="games" style="display: none;">
         <h1>Games</h1>
@@ -672,9 +652,6 @@
         
         document.addEventListener("DOMContentLoaded", function() {
             const images = document.querySelectorAll('.image');
-            const iframeContainer = document.getElementById('iframe-container');
-            const iframe = document.getElementById('iframe');
-            const backBtn = document.getElementById('back-btn');
             
             images.forEach(image => {
                 image.addEventListener('click', function() {
@@ -694,54 +671,34 @@
                         const baseNoPrependUrl = image.getAttribute('no-prepend');
                         fullUrl = atob(baseNoPrependUrl);
                     }
-        
+                    currentWindow = window.open('about:blank', '_blank');
+                
+                    currentWindow.document.title = "Home";
+  
+                    let link = currentWindow.document.createElement('link');
+                    link.rel = 'icon';
+                    link.href = "https://i.ibb.co/wrFhgSJm/class.png";
+                    currentWindow.document.head.appendChild(link);
+                    
+                    currentWindow.document.body.style.margin = '0';
+                    currentWindow.document.body.style.height = '100vh';
+  
+                    let iframe = document.createElement('iframe');
+                    iframe.style.border = 'none';
+                    iframe.style.width = '100%';
+                    iframe.style.height = '100%';
+                    iframe.style.margin = '0';
+                    iframe.allow = "clipboard-read clipboard-write; fullscreen; camera; microphone; autoplay";
+                    iframe.sandbox = "allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-downloads";
                     iframe.src = fullUrl;
+  
+                    currentWindow.document.body.appendChild(iframe);
                     iframeContainer.style.display = 'block';
                     iframeContainer.style.display = 'flex';
                 });
             });
-        
-            backBtn.addEventListener('click', function() {
-                if (iframeContainer.style.display === 'flex') {
-                    iframeContainer.style.display = 'none';
-                    iframe.src = '';
-                }
-            });
         });
-        
-        
-        dragElement(document.getElementById("back-btn"));
-        
-        function dragElement(elmnt) {
-            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-        
-            elmnt.onmousedown = dragMouseDown;
-        
-            function dragMouseDown(e) {
-                e = e || window.event;
-                e.preventDefault();
-                pos3 = e.clientX;
-                pos4 = e.clientY;
-                document.onmouseup = closeDragElement;
-                document.onmousemove = elementDrag;
-            }
-        
-            function elementDrag(e) {
-                e = e || window.event;
-                e.preventDefault();
-                pos1 = pos3 - e.clientX;
-                pos2 = pos4 - e.clientY;
-                pos3 = e.clientX;
-                pos4 = e.clientY;
-                elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-                elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-            }
-        
-            function closeDragElement() {
-                document.onmouseup = null;
-                document.onmousemove = null;
-            }
-        }
+      
       
       
         function filterGames() {
