@@ -187,51 +187,6 @@
           min-height: 150px; /**/
           cursor: pointer;
       }
-        
-        #iframe-container {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #5A5A5A;
-            /*  background-color: rgba(0, 0, 0, 0.8);  */
-            z-index: 9999;
-            text-align: center;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .loading::after {
-            content: '';
-            display: inline-block;
-            animation: dots 1.5s steps(1, end) infinite;
-        }
-
-    	.loading {
-    		margin: 0;
-            font-size: 2rem;
-            font-weight: bold;
-    	}
-
-        @keyframes dots {
-            0%   { content: ''; }
-            25%  { content: '.'; }
-            50%  { content: '..'; }
-            75%  { content: '...'; }
-            100% { content: ''; }
-        }
-
-        #iframe-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-        }
 
 
         #search-bar {
@@ -435,7 +390,8 @@
             <div class="game-container"><img class="image" prepend-image-urls="dino/icon.png" prepend-urls="dino/index.html"><p class="game-caption">Chrome Dino</p></div>
             <div class="game-container"><img class="image" prepend-image-urls="circloo/icon.png" prepend-urls="circloo/index.html"><p class="game-caption">CircloO</p></div>
             <div class="game-container"><img class="image" prepend-image-urls="cluster-rush/icon.jpg" prepend-urls="cluster-rush/index.html"><p class="game-caption">Cluster Rush</p></div>
-            <div class="game-container"><img class="image" prepend-image-urls="cookieclicker/img/perfectCookie.png" prepend-urls="cookieclicker/index.html"><p class="game-caption">Cookie Clicker</p></div>
+            <div class="game-container"><img class="image" prepend-image-urls="cookieclicker/img/perfectCookie.png" no-prepend="aHR0cHM6Ly9jMDBraWVjbGlja2VyLnBhZ2VzLmRldi8="><p class="game-caption">Cookie Clicker</p></div>
+            <div class="game-container"><img class="image" src="https://th.bing.com/th/id/R.5987afdab611a40caa2fb5cfd17d30ab?rik=1zUCR6M%2f6dmK5A&pid=ImgRaw&r=0" prepend-urlem="service/hvtrs8%2F-wuw%2Ccpaxyeaoeq.aoo%2F"><p class="game-caption">Crazy Games (Down)</p></div>
             <div class="game-container"><img class="image" src="https://th.bing.com/th/id/OIP.If9uq45WpWw_PQ87TJM7XAHaHa?rs=1&pid=ImgDetMain" prepend-urlem="gamefiles/crossy-road/index.html?world=original"><p class="game-caption">Crossy Road</p></div>
             <div class="game-container"><img class="image" prepend-image-urls="death-run-3d/img/death.png" prepend-urls="death-run-3d/index.html"><p class="game-caption">Death Run 3D</p></div>
             <div class="game-container"><img class="image" prepend-image-urls="dogeminer/img/dogeminer_300x300.png" prepend-urls="dogeminer/index.html"><p class="game-caption">Doge Miner</p></div>
