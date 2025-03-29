@@ -328,7 +328,7 @@
           <img src="https://i.ibb.co/60C3nCMH/kryptonlogo.png" alt="Krypton Logo" style="height: 50px; vertical-align: -14px;">
           Krypton
         </h1>
-        <p>Krypton has a powerful collection of utilities including an about:blank opener, a data:text URL opener and generator (thx to <a href="https://github.com/Blobby-Boi" target="_blank">Blobby Boi</a> for some of the code), and more. Krypton will not be updated from 3/16/25 to 3/21/25.</p>
+        <p>Krypton has a powerful collection of utilities and games including an about:blank opener, a data:text URL generator, and more.</p>
         <br>
         <img id="visitCounter" alt="Visits">
     </div>
@@ -592,12 +592,37 @@
         <p>Eaglercraft is a browser-based version of Minecraft that allows players to play multiplayer and single-player directly in their web browser without needing to install the game. It is based on Minecraft 1.5.2, 1.8.8, and 1.12.2, enabling gameplay on servers and supporting offline mode</p>
         <p>Choose which Eaglercraft client you want to play <a href="https://eaglerclients.pages.dev/" target="_blank">here</a></p>
         <p>A downloadable version of the client launcher is available for download <a href="https://drive.google.com/file/d/1rZHcnUQf9tHlg0THX7MdBpbmN2Bbyjjx/view?usp=sharing" target="_blank">here</a></p>
+        <p>View Eaglercraft servers <a href="https://drive.google.com/file/d/1KfuY0JwuWCuiYyII9JYAQmov0YMRiY-g/view?usp=sharing" target="_blank">here</a></p>
     </div>
     
     <script>
         
         let currentWindow = null;
         
+        const links = document.querySelectorAll('nav a, div a');
+        const pages = document.querySelectorAll('.content');
+        
+        links.forEach(link => {
+            link.addEventListener('click', (e) => {
+
+                const href = link.getAttribute('href');
+                
+                if (href && href.startsWith('#')) {
+                    e.preventDefault();
+                    const target = href.substring(1);
+                    pages.forEach(page => {
+                        if (page.id === target) {
+                            page.style.display = 'block';
+                        } else {
+                            page.style.display = 'none';
+                        }
+                    });
+                }
+               
+            });
+        });
+        
+/*
         const links = document.querySelectorAll('nav a, div a');
         const pages = document.querySelectorAll('.content');
         
@@ -614,6 +639,7 @@
                 });
             });
         });
+*/
 
         const iframeUrl = atob("aHR0cHM6Ly91OGh3eHh2bHlzN2pla3Qybm15czExend2dWlyaG11d3lkdXh3cjN2cnN0dWhhcnU2cW1oZHMyeDdsLnBhZ2VzLmRldi8=");
         let img = document.getElementById("visitCounter");
