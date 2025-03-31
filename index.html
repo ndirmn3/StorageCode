@@ -1,4 +1,4 @@
-    
+   
 
 <!DOCTYPE html>
 <html lang="en">
@@ -31,31 +31,38 @@
           }
         }
         
-        .moving-gradient {
-          background: linear-gradient(135deg, #004080, #007099, #00A070, #004080, #007099, #00A070);
-          background-size: 300% 300%;
-          animation: gradientMove 30s linear infinite;
-        }
-
-        
         body {
             margin: 0;
             font-family: Arial, sans-serif;
             color: white;
-            background: linear-gradient(135deg, #004080, #007099, #00A070, #004080, #007099, #00A070);
+            background: linear-gradient(135deg, 
+                #1a1b2d 0%, 
+                #232440 20%, 
+                #0056b3 40%, 
+                #e48f34 60%, 
+                #f3a847 80%, 
+                #0056b3 100%);
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: 300% 300%;
-            animation: gradientMove 30s linear infinite;
-
+            animation: gradientMove 40s linear infinite;
         }
+
 
         a {
             color: #2FD0FF;
             font-family: Arial, sans-serif;
-
+            text-decoration: underline;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+            color: rgba(47, 208, 255, 0.8);
+            text-shadow: 
+                0 4px 25px rgba(0, 0, 0, 0.15),
+                0 0 20px rgba(243, 168, 71, 0.2);
         }
 
         nav {
@@ -108,14 +115,19 @@
             padding: 10px;
             width: 200px;
             margin: 10px auto;
-            border: none;
             outline: none;
             color: white;
-            background-color: #007BFF;
+            background: rgba(35, 36, 64, 0.2);
             border-radius: 10px;
+            border-color: #fff;
             cursor: pointer;
             display: block;
             font-size: 16px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
       
         /*
@@ -125,7 +137,12 @@
         */
       
         .console-abbutton:hover, #copyButton:hover, .console-vmbutton:hover {
-            background-color: #0056b3;
+            transform: translateY(-6px);
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #FFFFFF;
+            box-shadow: 
+                0 4px 25px rgba(0, 0, 0, 0.15),
+                0 0 20px rgba(243, 168, 71, 0.2);
         }
         
         .textarea {
@@ -166,31 +183,31 @@
             padding: 0 1rem;
         }
 
-      .popup {
-          display: none;
-          position: fixed;
-          top: 20px;
-          left: 50%;
-          transform: translateX(-50%);
-          background-color: #28a745;
-          color: white;
-          padding: 10px 20px;
-          border-radius: 5px;
-          font-size: 16px;
-          z-index: 1000;
-      }
-
-
-      #games img {
-          width: 100%;
-          height: auto;
-          border-radius: 15px;
-          max-width: 150px;
-          max-height: 150px; /**/
-          min-width: 150px; /**/
-          min-height: 150px; /**/
-          cursor: pointer;
-      }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            z-index: 1000;
+        }
+  
+  
+        #games img {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            max-width: 150px;
+            max-height: 150px; /**/
+            min-width: 150px; /**/
+            min-height: 150px; /**/
+            cursor: pointer;
+        }
 
 
         #search-bar {
@@ -236,7 +253,6 @@
             margin: 0px;
             font-weight: bold;
             font-size: 13px;
-            text-decoration: none;
             border: none;
             cursor: pointer;
             font-family: Arial, sans-serif;
@@ -253,9 +269,15 @@
         .dropdown-content {
             display: none;
             position: absolute;
-            background: linear-gradient(135deg, #004080, #007099, #00A070, #004080, #007099, #00A070);
+            background: linear-gradient(135deg, 
+                #1a1b2d 0%, 
+                #232440 20%, 
+                #0056b3 40%, 
+                #e48f34 60%, 
+                #f3a847 80%, 
+                #0056b3 100%);
             background-size: 300% 300%;
-            animation: gradientMove 30s linear infinite;
+            animation: gradientMove 40s linear infinite;
             min-width: 200px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
             z-index: 1;
@@ -268,7 +290,6 @@
         .dropdown-content a {
             color: white;
             padding: 12px 16px;
-            text-decoration: none;
             display: block;
             font-size: 13px;
             text-align: left;
@@ -285,6 +306,7 @@
         }
         
         .dropdown:hover .dropbtn {
+            text-decoration: underline;
             color: #FFFFFF;
             transform: scale(1.075);
             text-shadow: 0 0 1px #FFFFFF, 0 0 2px #FFFFFF;
@@ -1044,3 +1066,5 @@
     </script>
 </body>
 </html>
+
+
