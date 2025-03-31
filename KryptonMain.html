@@ -35,17 +35,6 @@
             margin: 0;
             font-family: Arial, sans-serif;
             color: white;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        body::before {
-            content: "";
-            position: fixed;
-            top: -10%;
-            left: -10%;
-            width: 120%;
-            height: 120%;
             background: linear-gradient(135deg, 
                 #1a1b2d 0%, 
                 #232440 20%, 
@@ -53,10 +42,12 @@
                 #e48f34 60%, 
                 #f3a847 80%, 
                 #0056b3 100%);
-            background-size: 400% 400%;
-            animation: gradientMove 40s ease-in-out infinite;
-            filter: blur(20px);
-            z-index: -1;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 300% 300%;
+            animation: gradientMove 40s linear infinite;
         }
 
 
@@ -192,31 +183,31 @@
             padding: 0 1rem;
         }
 
-      .popup {
-          display: none;
-          position: fixed;
-          top: 20px;
-          left: 50%;
-          transform: translateX(-50%);
-          background-color: #28a745;
-          color: white;
-          padding: 10px 20px;
-          border-radius: 5px;
-          font-size: 16px;
-          z-index: 1000;
-      }
-
-
-      #games img {
-          width: 100%;
-          height: auto;
-          border-radius: 15px;
-          max-width: 150px;
-          max-height: 150px; /**/
-          min-width: 150px; /**/
-          min-height: 150px; /**/
-          cursor: pointer;
-      }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            z-index: 1000;
+        }
+  
+  
+        #games img {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            max-width: 150px;
+            max-height: 150px; /**/
+            min-width: 150px; /**/
+            min-height: 150px; /**/
+            cursor: pointer;
+        }
 
 
         #search-bar {
@@ -278,9 +269,15 @@
         .dropdown-content {
             display: none;
             position: absolute;
-            background: linear-gradient(135deg, #004080, #007099, #00A070, #004080, #007099, #00A070);
+            background: linear-gradient(135deg, 
+                #1a1b2d 0%, 
+                #232440 20%, 
+                #0056b3 40%, 
+                #e48f34 60%, 
+                #f3a847 80%, 
+                #0056b3 100%);
             background-size: 300% 300%;
-            animation: gradientMove 30s linear infinite;
+            animation: gradientMove 40s linear infinite;
             min-width: 200px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
             z-index: 1;
@@ -309,7 +306,7 @@
         }
         
         .dropdown:hover .dropbtn {
-          text-decoration: underline;
+            text-decoration: underline;
             color: #FFFFFF;
             transform: scale(1.075);
             text-shadow: 0 0 1px #FFFFFF, 0 0 2px #FFFFFF;
@@ -1037,7 +1034,7 @@
               },
               "move": {
                   "enable": true,
-                  "speed": 4,
+                  "speed": 6,
                   "direction": "none",
                   "random": false,
                   "straight": false,
