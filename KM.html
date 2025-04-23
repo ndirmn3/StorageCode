@@ -762,10 +762,28 @@
                     iframe.style.height = '100%';
                     iframe.style.margin = '0';
                     iframe.allow = "clipboard-read clipboard-write; fullscreen; camera; microphone; autoplay";
-                    iframe.sandbox = "allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-downloads";
+                    iframe.sandbox = "allow-scripts allow-same-origin";
                     iframe.src = fullUrl;
   
                     currentWindow.document.body.appendChild(iframe);
+
+
+                  iframe.onload = function() {
+                      iframe.contentWindow.addEventListener('beforeunload', function(event) {
+                          const iframeLocation = iframe.contentWindow.location.href;
+                          const blockedDomain = 'y0-hu97j5xscupcskgc3tmykun3iayj696ufax0jir7cu4gaeghxytr6e-kfkbj.hydraulik-drehdurchfuehrungen.com';
+                          
+                          if (iframeLocation.includes(blockedDomain)) {
+                              event.preventDefault();
+                              event.returnValue = '';
+                          }
+                      });
+                  };
+
+                    currentWindow.window.open = function() {
+                         return null;
+                    };
+                   
                     iframeContainer.style.display = 'block';
                     iframeContainer.style.display = 'flex';
                 });
